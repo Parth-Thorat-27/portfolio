@@ -36,22 +36,50 @@ tools/                     mirror / serve / screenshot / compare scripts
 | III | Experience | Student Union Council (Media Head), Photo Circle RAIT (Chief Coordinator) |
 | IV | Skills | the six stack groups |
 | V | Education | RAIT / P.E. Society / D.A.V. |
-| VI | Certifications | all nine, grouped by issuer |
+| VI | Certifications | all ten, grouped by issuer, each name opening its scan |
 | VII | Beyond work | tabla, badminton |
-| VIII | Contact | email as the primary call to action, phone, GitHub, LinkedIn |
+| VIII | Contact | email as the primary call to action, résumé PDF, GitHub, LinkedIn |
 
 ## The contact section
 
 The email is the one thing the page is asking for, so it is set at display scale as its own
-band with a hover arrow and a copy button, rather than as 14px text in a column of four.
-Around it: an availability line with a pulsing marker, phone and profile links with arrows
-that slide on hover, and the current local time in Thane so someone in another timezone
-knows whether it is a reasonable hour to call.
+band with a hover arrow and a copy button, rather than as 14px text in a column of three.
+Around it: an availability line with a pulsing marker, the résumé PDF and the profile links
+with arrows that slide on hover, and the current local time in Thane so someone in another
+timezone knows whether it is a reasonable hour to expect a reply.
 
-Copy buttons use `navigator.clipboard`, confirm on the button itself and through an
-`aria-live` region, and revert after two seconds. Clipboard writes need a secure context —
-where there isn't one the buttons remove themselves rather than fail silently, and a
-rejected write says so instead of claiming success.
+The copy button uses `navigator.clipboard`, confirms on the button itself and through an
+`aria-live` region, and reverts after two seconds. Clipboard writes need a secure context —
+where there isn't one the button removes itself rather than fail silently, and a rejected
+write says so instead of claiming success.
+
+## The certifications section
+
+Every certification name is a button that opens its own scan in a native
+`<dialog>`, so the focus trap, Esc and the top layer are the browser's job rather
+than ours. The `src` is set on click, not in the markup — the scans are megabytes
+each and none of them should cross the wire until somebody asks for one. Opening
+sets `data-modal-open` on `<html>`, which the momentum scroller reads so the page
+cannot move behind the viewer; `overflow: hidden` covers touch and reduced
+motion, where the scroller is not running.
+
+On a phone the dialog becomes the screen, and the fit view puts a landscape scan
+near 20% — small enough that the certificate's own text cannot be read. So the
+viewer has two states: fit, and a zoom that pans. Zoom is natural size on a
+desktop and two screens wide on a phone, where natural size would be four times
+the viewport and turn reading into a panning exercise. The name is the visible
+affordance, but a tap anywhere on the card opens it too — the name alone is a
+16px-tall target — unless the tap ended a text selection.
+
+Hovering a card fades in the issuer set large behind it, from `data-issuer` via
+`content: attr()`. That is a wordmark in the page's own display face, not the
+company's logo: real brand marks are full colour and would be the only colour on
+the page. To use actual logos, add a `<symbol>` per issuer to the sprite in
+[index.html](index.html) and swap `.cert::after` for a positioned `<svg><use>` —
+the reveal keys off `.cert`, not the glyphs.
+
+Filenames under `assets/certificates/` are named for what they contain, so the
+mapping from card to scan is readable in the markup rather than a lookup.
 
 ## Design notes
 
@@ -100,13 +128,22 @@ Touch devices keep native scrolling — it already has momentum.
 npm install --prefix tools      # puppeteer-core, drives your installed Chrome
 node tools/shots.mjs            # screenshots every section at 1440px and 390px
 node tools/motion.mjs           # asserts the scroll behaviour, including reduced motion
+node tools/certs.mjs            # asserts the certificate viewer
 ```
 
 `shots.mjs` fails loudly on console errors, 4xx responses and horizontal overflow — last
 run: 8 sections, no problems, at both widths. `motion.mjs` checks that a wheel tick eases
 over frames rather than jumping, that titles pin, that parallax transforms actually change
-with scroll, that the rail leader tracks progress, that the copy buttons and clock behave,
-and that reduced motion turns all of it off — last run 16/16.
+with scroll, that the rail leader tracks progress, that the copy button and clock behave,
+and that reduced motion turns all of it off — last run 16/16. `certs.mjs` checks
+that no scan is fetched on load, that the count matches the cards, that every
+path resolves, that each name opens its own image, that the page cannot scroll
+behind the viewer, and that the button, the backdrop and Esc all close it and
+release the lock — last run 18/18. It also asserts that a *closed* viewer takes
+up no space: setting `display` on `.lightbox` rather than `.lightbox[open]`
+beats the user agent's `dialog:not([open])` rule and leaves an invisible block at
+the end of every page that still swallows clicks over it. Nothing else catches
+that — no overflow, no console error, no visible difference.
 
 Headless Chrome refuses real clipboard writes even with `clipboard-write` granted over
 CDP, so `motion.mjs` stubs `navigator.clipboard` and drives both the success and the
@@ -115,7 +152,7 @@ on localhost or https.
 
 ## Before this goes public
 
-Three things need your attention:
+Two things need your attention:
 
 1. **The LinkedIn URL is a guess.** The résumé shows the display name, not the slug.
    `https://www.linkedin.com/in/parth-thorat` is a placeholder — check it and correct
@@ -124,8 +161,10 @@ Three things need your attention:
    commercial faces taken from Shopify's site; Imperial Script is a free Google font.
    For a public deploy, buy licences or swap the first two in
    [assets/css/fonts.css](assets/css/fonts.css) — nothing else references them by name.
-3. **No résumé PDF is linked.** Drop the file at `assets/Parth-Thorat-Resume.pdf` and add
-   a link in the contact section if you want one.
+
+The résumé at `assets/resume/Parth_Thorat_Resume.pdf` is linked from the top bar and from
+the contact section. It carries the phone number, which the page itself no longer shows —
+worth knowing before you hand the link around.
 
 `reference/editions/` is a study copy of Shopify's page — their copy, images and
 JavaScript. It is in this repository deliberately, as the design reference. Keep it out of

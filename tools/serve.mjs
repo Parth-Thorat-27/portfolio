@@ -41,6 +41,9 @@ const MIME = {
   '.woff': 'font/woff',
   '.ttf': 'font/ttf',
   '.riv': 'application/octet-stream',
+  // Without this the résumé falls through to octet-stream and the browser
+  // downloads it instead of previewing, which is not how a host will serve it.
+  '.pdf': 'application/pdf',
 };
 
 async function sendFile(res, filePath, status = 200) {

@@ -59,6 +59,12 @@
       if (event.target.closest && event.target.closest('[data-native-scroll]')) return;
       if (event.ctrlKey) return; // pinch zoom
 
+      // The certificate viewer sits over the page; nothing behind it may move.
+      if (document.documentElement.dataset.modalOpen === 'true') {
+        event.preventDefault();
+        return;
+      }
+
       event.preventDefault();
       state.target = clamp(state.target + pixels(event), 0, maxScroll());
       state.active = true;
@@ -265,7 +271,7 @@
 
   // ================================================================= contact
 
-  /** Copy-to-clipboard on the email and phone, with the button as the receipt. */
+  /** Copy-to-clipboard on the email, with the button as the receipt. */
   (() => {
     const buttons = [...document.querySelectorAll('[data-copy]')];
     if (!buttons.length) return;
@@ -330,6 +336,109 @@
     }
 
     render();
+  })();
+
+  // ===================================================== certificate viewer
+
+  /**
+   * Clicking a certification name opens its scan. A native <dialog> carries the
+   * focus trap, the Esc handling and the top layer, so the only work here is
+   * the source, the scroll lock and the ways out.
+   */
+  (() => {
+    const dialog = document.querySelector('[data-lightbox]');
+    const buttons = [...document.querySelectorAll('.cert__open')];
+    if (!dialog || !buttons.length) return;
+
+    // No showModal means no focus trap and no top layer. Rather than ship a
+    // half-modal, leave the names as plain headings.
+    if (typeof dialog.showModal !== 'function') {
+      for (const b of buttons) b.disabled = true;
+      return;
+    }
+
+    const img = dialog.querySelector('[data-lightbox-img]');
+    const stage = dialog.querySelector('[data-lightbox-stage]');
+    const caption = dialog.querySelector('[data-lightbox-cap]');
+    const closeButton = dialog.querySelector('[data-lightbox-close]');
+    const zoomButton = dialog.querySelector('[data-lightbox-zoom]');
+    const root = document.documentElement;
+
+    /**
+     * Fit or natural size. At fit a landscape scan on a phone lands around 20%,
+     * where the certificate's own text cannot be read; zoomed, the stage pans.
+     */
+    function setZoom(on) {
+      if (on) dialog.dataset.zoom = 'true';
+      else delete dialog.dataset.zoom;
+      zoomButton.setAttribute('aria-pressed', String(on));
+      zoomButton.firstChild.nodeValue = on ? 'Fit' : 'Zoom';
+
+      // Come in at the top-left of the scan rather than wherever the last one
+      // was left, and centre it horizontally so the pan starts somewhere sane.
+      if (on) {
+        stage.scrollTop = 0;
+        stage.scrollLeft = Math.max(0, (stage.scrollWidth - stage.clientWidth) / 2);
+      }
+    }
+
+    zoomButton.addEventListener('click', () => setZoom(dialog.dataset.zoom !== 'true'));
+    img.addEventListener('click', () => setZoom(dialog.dataset.zoom !== 'true'));
+
+    function open(button) {
+      const src = button.dataset.cert;
+      if (!src) return;
+      const name = button.textContent.trim();
+
+      caption.textContent = name;
+      img.alt = `Certificate: ${name}`;
+      setZoom(false);
+      // Set here rather than in the markup: these scans are megabytes each,
+      // and none of them should cross the wire until somebody asks.
+      if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+
+      // The custom scroller reads this; the overflow covers native scrolling
+      // on touch and under reduced motion, where the scroller is not running.
+      // Deliberately not named data-lightbox: that is the dialog's own hook,
+      // and a matching attribute on <html> would shadow it in every
+      // querySelector('[data-lightbox]') the moment the viewer opened.
+      root.dataset.modalOpen = 'true';
+      root.style.overflow = 'hidden';
+      dialog.showModal();
+    }
+
+    for (const button of buttons) {
+      button.addEventListener('click', () => open(button));
+
+      // The name carries the affordance, but on a phone it is a 16px-tall
+      // target. Let a tap anywhere on the card count as the same press —
+      // except one that ends a text selection, which was not a tap at all.
+      const card = button.closest('.cert');
+      if (!card) continue;
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('.cert__open')) return;
+        if (window.getSelection?.().toString()) return;
+        open(button);
+      });
+    }
+
+    img.addEventListener('error', () => {
+      caption.textContent = 'That certificate could not be loaded.';
+    });
+
+    closeButton.addEventListener('click', () => dialog.close());
+
+    // The dialog box is narrower than the viewport, so a click landing on the
+    // element itself rather than on the bar or the image came from the backdrop.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    // One place for every exit: the button, the backdrop and Esc.
+    dialog.addEventListener('close', () => {
+      delete root.dataset.modalOpen;
+      root.style.overflow = '';
+    });
   })();
 
   // ==================================================== chrome and rail state

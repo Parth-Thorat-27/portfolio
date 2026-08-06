@@ -33,6 +33,11 @@
   --fs-body: 14px;
   --fs-label: 11px;
 
+  /* Long-form prose only. The 14px/1.1 body is a caption size on display
+     leading; it reads fine for a label and badly for a three-line paragraph. */
+  --fs-prose: 15px;
+  --lh-prose: 1.5;
+
   --gutter: 20px;
   --rail: 0px;
   --maxw: 1680px;
@@ -71,6 +76,16 @@ html {
   /* Anchor jumps must clear the fixed top bar. */
   scroll-padding-top: 60px;
   background: var(--black);
+  /* The page carries its own scroll affordances — the hero cue, the numbered
+     rail, the leader that fills as a section passes — so the native bar is
+     hidden. Wheel, trackpad, keys and touch are all unaffected; what does go
+     is dragging the thumb, since there is no longer one to grab. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -149,11 +164,14 @@ svg {
 
 /* Every band declares its own paper, and everything inside reads its colour
    from these three custom properties rather than hard-coding one. */
+/* --dim carries the secondary text on every band, so it has to clear 4.5:1
+   against its own paper: the lighter grey on the black stage, the darker one on
+   the two papers. Swapping them puts both below 3:1. */
 .band {
   position: relative;
   --paper: var(--black);
   --text: var(--bone);
-  --dim: var(--mid);
+  --dim: var(--muted); /* 6.5:1 on black */
   --line: rgba(247, 247, 238, 0.14);
   background: var(--paper);
   color: var(--text);
@@ -162,7 +180,7 @@ svg {
 .band--bone {
   --paper: var(--bone);
   --text: var(--ink);
-  --dim: var(--muted);
+  --dim: var(--mid); /* 6.1:1 on bone */
   --line: rgba(41, 41, 25, 0.16);
 }
 
@@ -235,17 +253,14 @@ svg {
 
 .topbar__mark {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
+  /* The wordmark is 15px of text; the target around it should be a finger. */
+  min-height: 44px;
 }
 
 .topbar__name {
   font-size: var(--fs-body);
-}
-
-.topbar__sub {
-  font-size: var(--fs-body);
-  opacity: 0.5;
 }
 
 .topbar__spacer {
@@ -259,8 +274,11 @@ svg {
   font-size: var(--fs-body);
 }
 
+/* The padding is the tap target; the underline stays pinned to the text rather
+   than dropping to the bottom of the enlarged box. */
 .topbar__links a:not(.pill) {
   position: relative;
+  padding-block: 15px;
 }
 
 .topbar__links a:not(.pill)::after {
@@ -268,7 +286,7 @@ svg {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -3px;
+  bottom: 12px;
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
@@ -283,8 +301,8 @@ svg {
 .pill {
   display: inline-flex;
   align-items: center;
-  height: 32px;
-  padding-inline: 16px;
+  height: 40px;
+  padding-inline: 18px;
   border-radius: 999px;
   background: var(--bone);
   color: var(--black);
@@ -303,10 +321,15 @@ svg {
   transform: translateY(-1px);
 }
 
+/* The section links duplicate the bottom strip on a phone, so they go; the
+   résumé does not appear anywhere else above the footer, so it stays. */
 @media (max-width: 699px) {
-  .topbar__sub,
-  .topbar__links a:not(.pill) {
+  .topbar__links a[href^='#'] {
     display: none;
+  }
+
+  .topbar__links {
+    gap: 14px;
   }
 }
 
@@ -342,7 +365,7 @@ svg {
 
 .hero__frame {
   position: relative;
-  width: min(340px, 62vw);
+  width: min(340px, 74vw);
   aspect-ratio: 1 / 1.618;
   border: 1px solid rgba(247, 247, 238, 0.28);
   display: grid;
@@ -350,8 +373,10 @@ svg {
   will-change: transform, opacity;
 }
 
+/* 4.6vw only reached the 62px ceiling past 1350px, which left the name set at
+   its 34px floor across every phone and tablet — small type in a large frame. */
 .hero__title {
-  font-size: clamp(34px, 4.6vw, 62px);
+  font-size: clamp(34px, 10vw, 62px);
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--bone);
@@ -486,8 +511,10 @@ svg {
   flex-direction: column;
   justify-content: flex-end;
   /* Held well clear of the bottom edge: the rail is fixed while the bands
-     scroll past it, and near the edge it regularly straddles two of them. */
-  padding-bottom: 96px;
+     scroll past it, and near the edge it regularly straddles two of them.
+     The block is bottom-aligned, so this has to absorb the height of the foot
+     as well — a one-line foot needs more padding than a three-line one. */
+  padding-bottom: 128px;
   color: var(--bone);
   opacity: 0;
   visibility: hidden;
@@ -585,12 +612,6 @@ svg {
   opacity: 0.55;
 }
 
-.rail__foot a:hover {
-  opacity: 1;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
 /* ------------------------------------------------------- mobile section rail */
 
 /* Below the breakpoint where the left rail fits, the same eight sections
@@ -631,7 +652,10 @@ svg {
 
 .mrail a {
   flex: none;
-  padding: 7px 12px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 7px 14px;
   border: 1px solid currentColor;
   border-radius: 999px;
   font-size: var(--fs-label);
@@ -839,8 +863,9 @@ svg {
 }
 
 .stat__label {
-  margin-top: 10px;
-  max-width: 22ch;
+  margin-top: 12px;
+  max-width: 26ch;
+  line-height: 1.4;
   color: var(--dim);
 }
 
@@ -919,6 +944,8 @@ svg {
 .bullets li {
   position: relative;
   padding-left: 22px;
+  font-size: var(--fs-prose);
+  line-height: var(--lh-prose);
   color: var(--dim);
 }
 
@@ -926,9 +953,11 @@ svg {
   content: '—';
   position: absolute;
   left: 0;
-  top: 0;
+  /* The marker sits on the first line's baseline, which moved down with the
+     prose leading. */
+  top: 0.1em;
   color: var(--text);
-  opacity: 0.4;
+  opacity: 0.55;
 }
 
 .bullets strong {
@@ -1045,6 +1074,8 @@ svg {
 
 .spec__val--text {
   display: block;
+  font-size: var(--fs-prose);
+  line-height: var(--lh-prose);
   color: var(--dim);
   max-width: 70ch;
 }
@@ -1076,6 +1107,8 @@ svg {
 }
 
 .cert {
+  position: relative;
+  overflow: hidden;
   background: var(--paper);
   padding: 22px 24px 26px;
   display: flex;
@@ -1086,6 +1119,45 @@ svg {
 
 .cert:hover {
   background: color-mix(in oklab, var(--paper) 92%, var(--text));
+}
+
+/* The issuer, set large as a watermark and revealed on hover. The string comes
+   from the card's data attribute, so it is written once in the markup.
+   To use a real logo instead, drop a <symbol> in the sprite and swap this for a
+   positioned <svg><use> — the reveal below keys off .cert, not the glyphs. */
+/* Sized so the longest issuer still clears the card's own padding in the
+   narrowest column — a wordmark sliced by the card edge reads as a bug. */
+.cert::after {
+  content: attr(data-issuer);
+  position: absolute;
+  right: 24px;
+  bottom: 18px;
+  z-index: 0;
+  max-width: calc(100% - 48px);
+  font-size: clamp(34px, 3.4vw, 54px);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.55s var(--ease-mask);
+  pointer-events: none;
+  user-select: none;
+}
+
+.cert:hover::after,
+.cert:has(.cert__open:focus-visible)::after {
+  opacity: 0.1;
+  transform: none;
+}
+
+/* The watermark is positioned, so the card's own text has to be lifted out of
+   the static layer or it paints underneath. */
+.cert > * {
+  position: relative;
+  z-index: 1;
 }
 
 .cert__issuer {
@@ -1108,6 +1180,208 @@ svg {
   line-height: 0.97;
   letter-spacing: -0.04em;
   color: var(--dim);
+}
+
+/* The whole name is the target. It stays looking like a heading — the affordance
+   is the rule that draws itself in under the text on hover, not a link colour. */
+.cert__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  cursor: pointer;
+}
+
+.cert__open > span {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.4s var(--ease);
+}
+
+.cert__open:hover > span,
+.cert__open:focus-visible > span {
+  background-size: 100% 1px;
+}
+
+/* The card is the click target's backdrop, so light it up from the button too —
+   otherwise only a pointer resting on the padding gets the hover state. */
+.cert:has(.cert__open:hover),
+.cert:has(.cert__open:focus-visible) {
+  background: color-mix(in oklab, var(--paper) 92%, var(--text));
+}
+
+/* ---------------------------------------------------------- certificate viewer */
+
+.lightbox {
+  width: min(1100px, 92vw);
+  max-height: 92svh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bone);
+  overflow: hidden;
+}
+
+/* Only when open. Setting display on .lightbox itself beats the user agent's
+   dialog:not([open]) { display: none }, which leaves a closed dialog laid out —
+   an invisible block at the end of the page that still swallows clicks. */
+.lightbox[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.lightbox__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 12px;
+}
+
+.lightbox__cap {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lightbox__actions {
+  flex: none;
+  display: flex;
+  gap: 8px;
+}
+
+.lightbox__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 7px 15px;
+  border: 1px solid rgba(247, 247, 238, 0.28);
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: var(--fs-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: none;
+  cursor: pointer;
+  transition:
+    background 0.25s var(--ease),
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.lightbox__btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.lightbox__btn:hover,
+.lightbox__btn[aria-pressed='true'] {
+  background: var(--bone);
+  border-color: transparent;
+  color: var(--black);
+}
+
+.lightbox__stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--bone);
+}
+
+/* The scans are landscape but vary in ratio, so bound the height rather than the
+   width and let the image sit at whatever width that gives. */
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+/* Zoomed is natural size: at fit, a 1650px scan on a phone lands near 20% and
+   the certificate's own text is unreadable. The stage pans instead. */
+.lightbox[data-zoom='true'] .lightbox__stage {
+  place-items: start;
+}
+
+.lightbox[data-zoom='true'] .lightbox__img {
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+
+/* On a phone the dialog is the screen — a centred box wastes the little height
+   there is, and the fit view needs every pixel of it. */
+@media (max-width: 699px) {
+  .lightbox {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100svh;
+    max-height: 100svh;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: var(--black);
+  }
+
+  .lightbox__bar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .lightbox__cap {
+    flex: 1 1 100%;
+    order: 2;
+    /* Some of these names run to three lines at this width. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .lightbox__actions {
+    flex: 1 1 100%;
+    order: 1;
+    justify-content: flex-end;
+  }
+
+  /* Natural size here is over four times the viewport — legible, but it turns
+     reading a certificate into a panning exercise. Two screens wide puts the
+     body text at a comfortable size and keeps the pan short. */
+  .lightbox[data-zoom='true'] .lightbox__img {
+    width: 210vw;
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] {
+    animation: lightbox-in 0.32s var(--ease-mask);
+  }
+
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
 }
 
 /* ----------------------------------------------------------------- footer */
@@ -1240,8 +1514,8 @@ svg {
 
 .copy {
   flex: none;
-  height: 34px;
-  padding-inline: 16px;
+  height: 44px;
+  padding-inline: 18px;
   border: 1px solid var(--line);
   border-radius: 999px;
   font-family: inherit;
@@ -1269,12 +1543,6 @@ svg {
   border-color: transparent;
 }
 
-.copy--sm {
-  height: 26px;
-  padding-inline: 11px;
-  margin-top: 10px;
-}
-
 /* Clipboard writes need a secure context; without one the button is a lie. */
 .copy[hidden] {
   display: none;
@@ -1290,7 +1558,9 @@ svg {
 
 @media (min-width: 700px) {
   .footer__meta {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* auto-fit rather than a fixed count, so adding a column does not squeeze
+       the others below their measure at the narrow end of the range. */
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   }
 }
 
@@ -1300,11 +1570,13 @@ svg {
   align-items: flex-start;
 }
 
+/* 21px of text is not a tap target. The padding does the work, so the baseline
+   alignment between the label and its hint survives. */
 .flink {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-block: 3px;
+  padding-block: 12px;
   transition: opacity 0.25s var(--ease);
 }
 
@@ -1325,6 +1597,11 @@ svg {
 .flink:hover .flink__arrow {
   transform: translate(2px, -2px);
   color: var(--text);
+}
+
+/* A download pulls the arrow down, not out to the side. */
+.flink--down:hover .flink__arrow {
+  transform: translateY(2px);
 }
 
 .flink:hover .flink__hint {
@@ -1392,6 +1669,7 @@ svg {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding-block: 16px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: color 0.25s var(--ease);
@@ -1426,6 +1704,25 @@ svg {
     /* Deep enough that the last row clears the section strip even in the band
        where the strip is still up but the page bottom is not yet reached. */
     padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ------------------------------------------------------- phone adjustments */
+
+/* A 390px screen gives up 40px to the gutter and another 48px to a card's own
+   padding before a word is set — a fifth of the width, spent on nothing. */
+@media (max-width: 699px) {
+  .cert {
+    padding: 18px 16px 20px;
+  }
+
+  .project {
+    padding: 26px 18px 28px;
+  }
+
+  /* Keep the watermark on the card's new inside edge. */
+  .cert::after {
+    right: 16px;
   }
 }
 

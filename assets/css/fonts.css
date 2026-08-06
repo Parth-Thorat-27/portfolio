@@ -1,0 +1,35 @@
+/* Display sans — headings, labels, body. */
+@font-face {
+  font-family: NeueMontreal;
+  src:
+    url(../fonts/NeueMontreal-Bold.woff2) format('woff2'),
+    url(../fonts/NeueMontreal-Bold.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  font-feature-settings: 'liga' 1, 'kern' 1;
+}
+
+/* Editorial serif — ledes and pull quotes. Carries small caps and discretionary
+   ligatures, both of which the ledes use. */
+@font-face {
+  font-family: HWCigars;
+  src:
+    url(../fonts/HWCigars-Regular.woff2) format('woff2'),
+    url(../fonts/HWCigars-Regular.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  font-feature-settings: 'liga' 1, 'dlig' 1, 'kern' 1, 'smcp' 1, 'c2sc' 1, 'case' 1;
+}
+
+/* Script — single swash letters only. */
+@font-face {
+  font-family: ImperialScript;
+  src:
+    url(../fonts/ImperialScript-Regular.woff2) format('woff2'),
+    url(../fonts/ImperialScript-Regular.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

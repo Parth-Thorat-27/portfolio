@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parth Ramesh Thorat — AI/DS Engineer &amp; Data Analyst</title>
+    <meta
+      name="description"
+      content="AI/DS engineer and data analyst in Thane, India. MLOps pipelines, full-stack data products, and BI dashboards — 92% model precision, 40% faster queries, 30% lower latency."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="author" content="Parth Ramesh Thorat" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Parth Ramesh Thorat — AI/DS Engineer &amp; Data Analyst" />
+    <meta
+      property="og:description"
+      content="MLOps pipelines, full-stack data products, and BI dashboards."
+    />
+
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/NeueMontreal-Bold.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/HWCigars-Regular.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ImperialScript-Regular.woff2" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/fonts.css" />
+    <link rel="stylesheet" href="assets/css/portfolio.css" />
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+
+    <!-- Reusable construction-line artwork, referenced by <use> in each opener. -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
+      <symbol id="fig-opener" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <g fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+          <circle cx="720" cy="450" r="430" />
+          <circle cx="295" cy="-40" r="620" />
+          <circle cx="1150" cy="880" r="560" />
+          <path d="M550 0V900M890 0V900M0 348H1440M0 552H1440" />
+          <path d="M0 0 720 450 1440 900M1440 0 720 450 0 900" />
+          <rect x="550" y="348" width="340" height="204" />
+        </g>
+      </symbol>
+
+      <symbol id="fig-hero" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <g fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+          <circle cx="720" cy="450" r="430" />
+          <circle cx="720" cy="450" r="690" />
+          <circle cx="295" cy="-40" r="620" />
+          <circle cx="1150" cy="880" r="560" />
+          <path d="M550 0V900M720 0V900M890 0V900" />
+          <path d="M0 348H1440M0 552H1440" />
+          <path d="M0 0 1440 900M1440 0 0 900" />
+
+          <!-- Golden rectangle, subdivided square by square. -->
+          <g>
+            <rect x="340" y="215" width="130" height="210" />
+            <rect x="340" y="215" width="130" height="130" />
+            <rect x="340" y="345" width="80" height="80" />
+            <rect x="420" y="345" width="50" height="50" />
+            <rect x="440" y="395" width="30" height="30" />
+            <rect x="420" y="395" width="20" height="20" />
+            <path d="M340 345a130 130 0 0 0 130-130" />
+            <path d="M420 345a80 80 0 0 1-80 80" />
+            <path d="M420 395a50 50 0 0 0 50-50" />
+            <path d="M440 425a30 30 0 0 1 30-30" />
+          </g>
+        </g>
+      </symbol>
+    </svg>
+
+    <!-- ============================================================ top bar -->
+    <header class="topbar" data-topbar data-theme="dark">
+      <div class="topbar__inner">
+        <a class="topbar__mark" href="#top">
+          <span class="topbar__name">Parth Thorat</span>
+          <span class="topbar__sub">AI &amp; Data</span>
+        </a>
+        <span class="topbar__spacer"></span>
+        <nav class="topbar__links" aria-label="Shortcuts">
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a class="pill" href="mailto:pt47275@gmail.com">Get in touch</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ========================================================== rail nav -->
+    <nav class="rail" data-rail data-theme="dark" data-visible="false" aria-label="Sections">
+      <a class="rail__mark" href="#top">Portfolio<br />MMXXVI</a>
+      <ul class="rail__list">
+        <li class="rail__item"><a href="#profile"><span>Profile</span><span class="rail__leader"></span><span class="rail__num">I</span></a></li>
+        <li class="rail__item"><a href="#projects"><span>Projects</span><span class="rail__leader"></span><span class="rail__num">II</span></a></li>
+        <li class="rail__item"><a href="#experience"><span>Experience</span><span class="rail__leader"></span><span class="rail__num">III</span></a></li>
+        <li class="rail__item"><a href="#skills"><span>Skills</span><span class="rail__leader"></span><span class="rail__num">IV</span></a></li>
+        <li class="rail__item"><a href="#education"><span>Education</span><span class="rail__leader"></span><span class="rail__num">V</span></a></li>
+        <li class="rail__item"><a href="#certifications"><span>Certifications</span><span class="rail__leader"></span><span class="rail__num">VI</span></a></li>
+        <li class="rail__item"><a href="#beyond"><span>Beyond work</span><span class="rail__leader"></span><span class="rail__num">VII</span></a></li>
+        <li class="rail__item"><a href="#contact"><span>Contact</span><span class="rail__leader"></span><span class="rail__num">VIII</span></a></li>
+      </ul>
+      <div class="rail__foot">
+        <span>&copy; 2026 Parth Thorat</span>
+        <a href="https://github.com/Parth-Thorat-27" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:pt47275@gmail.com">pt47275@gmail.com</a>
+      </div>
+    </nav>
+
+    <!-- ======================================================= mobile rail -->
+    <nav class="mrail" data-mrail data-native-scroll aria-label="Sections">
+      <a href="#profile">I&nbsp; Profile</a>
+      <a href="#projects">II&nbsp; Projects</a>
+      <a href="#experience">III&nbsp; Experience</a>
+      <a href="#skills">IV&nbsp; Skills</a>
+      <a href="#education">V&nbsp; Education</a>
+      <a href="#certifications">VI&nbsp; Certifications</a>
+      <a href="#beyond">VII&nbsp; Beyond work</a>
+      <a href="#contact">VIII&nbsp; Contact</a>
+    </nav>
+
+    <main id="main">
+      <!-- ============================================================ hero -->
+      <section class="hero band" id="top" data-band="dark">
+        <svg class="hero__grid" aria-hidden="true"><use href="#fig-hero" /></svg>
+
+        <div class="hero__frame">
+          <h1 class="hero__title">
+            <span class="hero__line"><span>Parth</span></span>
+            <span class="hero__line"><span>Ram<span class="script">e</span>sh</span></span>
+            <span class="hero__line"><span>Thorat</span></span>
+          </h1>
+        </div>
+
+        <div class="hero__meta">
+          <p class="hero__role">AI/DS Engineer &amp; Data Analyst</p>
+          <p class="hero__where">Thane · Maharashtra · India</p>
+        </div>
+
+        <p class="hero__scroll"><span>Scroll</span></p>
+      </section>
+
+      <!-- ======================================================= I. profile -->
+      <section class="band band--bone" id="profile" data-band="light" aria-labelledby="profile-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">I</p>
+            <h2 class="opener__title" id="profile-t">Profile</h2>
+            <p class="opener__lede">
+              <span class="drop">M</span>LOps workflows, full-stack data solutions and BI
+              visualizations — built end to end.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Currently</h3>
+              <span class="slab__count">Thane, India</span>
+            </div>
+            <div class="specs" data-reveal-stagger>
+              <div class="spec">
+                <p class="spec__key">Role</p>
+                <p class="spec__val spec__val--text">
+                  AI/DS engineer and data analyst. I build the whole path — data pipeline,
+                  model, deployment, and the dashboard the decision actually gets made from.
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Studying</p>
+                <p class="spec__val spec__val--text">
+                  B.Tech Computer Engineering, majoring in Artificial Intelligence &amp; Data
+                  Science, at Ramrao Adik Institute of Technology, D.Y. Patil Deemed University.
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Working with</p>
+                <p class="spec__val">
+                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span><span class="chip">BERT</span><span class="chip">MLflow</span><span class="chip">Docker</span><span class="chip">FastAPI</span><span class="chip">Power BI</span><span class="chip">React</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Open to</p>
+                <p class="spec__val spec__val--text">
+                  Machine learning engineering, MLOps, and analytics roles. Reachable at
+                  <a href="mailto:pt47275@gmail.com">pt47275@gmail.com</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Measured impact</h3>
+              <span class="slab__count">06</span>
+            </div>
+            <div class="stats" data-reveal-stagger>
+              <div class="stat">
+                <p class="stat__value" data-count="92" data-suffix="%">92%</p>
+                <p class="stat__label">Precision from the churn ensemble — logistic regression, random forest and XGBoost.</p>
+              </div>
+              <div class="stat">
+                <p class="stat__value" data-count="40" data-suffix="%">40%</p>
+                <p class="stat__label">Faster queries after normalising the schema and adding indexes.</p>
+              </div>
+              <div class="stat">
+                <p class="stat__value" data-count="40" data-suffix="%">40%</p>
+                <p class="stat__label">Less manual review time on banking and KYC documents.</p>
+              </div>
+              <div class="stat">
+                <p class="stat__value" data-count="30" data-suffix="%">30%</p>
+                <p class="stat__label">Lower invoice data-retrieval latency via SQLite index optimisation.</p>
+              </div>
+              <div class="stat">
+                <p class="stat__value" data-count="60" data-suffix="%">60%</p>
+                <p class="stat__label">More actionable insight than the static reports the dashboards replaced.</p>
+              </div>
+              <div class="stat">
+                <p class="stat__value" data-count="15" data-suffix="%">15%</p>
+                <p class="stat__label">Recall improvement over baseline through feature engineering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================== II. projects -->
+      <section class="band" id="projects" data-band="dark" aria-labelledby="projects-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">II</p>
+            <h2 class="opener__title" id="projects-t">Projects</h2>
+            <p class="opener__lede">
+              <span class="drop">F</span>our builds where the model, the pipeline and the
+              dashboard all had to ship together.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Selected work</h3>
+              <span class="slab__count">04</span>
+            </div>
+
+            <div class="projects" data-reveal-stagger>
+              <article class="project">
+                <div class="project__top">
+                  <span class="project__num">01</span>
+                  <h4 class="project__name">PocketCA</h4>
+                </div>
+                <p class="project__stack">
+                  React · Vite · Flask · SQLite · JavaScript · Python · Qwen2.5-VL-7B · OCR
+                </p>
+                <ul class="bullets project__points">
+                  <li>
+                    Architected a React + Vite SPA against a Flask REST API, rendering financial
+                    metrics client-side in real time with a
+                    <strong>30% reduction in invoice data-retrieval latency</strong> via SQLite
+                    index optimisation.
+                  </li>
+                  <li>
+                    Built a JavaScript fuzzy-matching reconciliation engine that parses supplier
+                    GSTINs, dates and invoice headers, sorting filing mismatches — wrong rates,
+                    missing filings — into actionable statuses.
+                  </li>
+                  <li>
+                    Shipped multi-lingual localisation across English, Hindi and Hinglish with
+                    localised WhatsApp templates, backed by automated Node.js and
+                    browser-automation QA suites for visual regression.
+                  </li>
+                </ul>
+                <div class="chips">
+                  <span class="chip chip--solid">30% lower latency</span>
+                  <span class="chip">React</span><span class="chip">Flask</span><span class="chip">SQLite</span><span class="chip">OCR</span>
+                </div>
+              </article>
+
+              <article class="project">
+                <div class="project__top">
+                  <span class="project__num">02</span>
+                  <h4 class="project__name">Banking AI Document Intelligence</h4>
+                </div>
+                <p class="project__stack">
+                  Python · MLOps · BERT · OCR · MLflow · DVC · Docker · FastAPI
+                </p>
+                <ul class="bullets project__points">
+                  <li>
+                    Architected a scalable document intelligence system that runs banking and KYC
+                    documents through OCR, document classification and BERT-based information
+                    extraction, <strong>cutting manual review time by 40%</strong>.
+                  </li>
+                  <li>
+                    Delivered reproducible end-to-end MLOps infrastructure: experiment tracking in
+                    MLflow, data versioning in DVC, CI/CD through Jenkins and GitHub Actions, and
+                    containerised deployment on Docker and FastAPI.
+                  </li>
+                </ul>
+                <div class="chips">
+                  <span class="chip chip--solid">40% less manual review</span>
+                  <span class="chip">BERT</span><span class="chip">MLflow</span><span class="chip">DVC</span><span class="chip">Docker</span><span class="chip">FastAPI</span>
+                </div>
+              </article>
+
+              <article class="project">
+                <div class="project__top">
+                  <span class="project__num">03</span>
+                  <h4 class="project__name">Customer Churn Prediction</h4>
+                </div>
+                <p class="project__stack">
+                  Python · SQL · Scikit-learn · XGBoost · Pandas · NumPy · Power BI · Tableau
+                </p>
+                <ul class="bullets project__points">
+                  <li>
+                    Developed an ensemble of logistic regression, random forest and XGBoost
+                    reaching <strong>92% precision</strong>, with feature engineering lifting
+                    recall <strong>15%</strong> over baseline.
+                  </li>
+                  <li>
+                    Designed a normalised relational schema with indexing for
+                    <strong>40% faster query performance</strong>, and cut false negatives on
+                    high-value customers through threshold tuning.
+                  </li>
+                  <li>
+                    Built interactive Power BI and Tableau dashboards with drill-downs, slicers,
+                    DAX calculations and real-time KPIs for executive stakeholders.
+                  </li>
+                </ul>
+                <div class="chips">
+                  <span class="chip chip--solid">92% precision</span>
+                  <span class="chip">XGBoost</span><span class="chip">Power BI</span><span class="chip">Tableau</span>
+                </div>
+              </article>
+
+              <article class="project">
+                <div class="project__top">
+                  <span class="project__num">04</span>
+                  <h4 class="project__name">BI &amp; Reservation Management</h4>
+                </div>
+                <p class="project__stack">Power BI · Tableau · Excel · SQL · DAX</p>
+                <ul class="bullets project__points">
+                  <li>
+                    Developed executive dashboards with real-time KPIs, drill-downs and slicers,
+                    integrating multiple sources through DAX to generate
+                    <strong>60% more actionable insight</strong> than the static reports they
+                    replaced.
+                  </li>
+                  <li>
+                    Designed and implemented a SQL-based airline reservation system covering
+                    flight schedules, bookings, passenger data, payment processing and check-in
+                    workflows.
+                  </li>
+                  <li>
+                    Held data accuracy, consistency and reliability while tuning dashboard
+                    performance and the visual storytelling around it.
+                  </li>
+                </ul>
+                <div class="chips">
+                  <span class="chip chip--solid">60% more insight</span>
+                  <span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">SQL</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================== III. experience -->
+      <section class="band band--sage" id="experience" data-band="light" aria-labelledby="experience-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">III</p>
+            <h2 class="opener__title" id="experience-t">Experience</h2>
+            <p class="opener__lede">
+              <span class="drop">T</span>wo years running media at stadium scale, on deadlines
+              that do not move.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Roles</h3>
+              <span class="slab__count">02</span>
+            </div>
+
+            <div data-reveal-stagger>
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Student Union Council — RAIT</h4>
+                  <p class="entry__role">Media Head</p>
+                  <p class="entry__when">July 2024 – July 2026 · Navi Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>
+                    Led media strategy, event documentation and digital content operations for
+                    large-scale sporting, entertainment and university events at D.Y. Patil
+                    Stadium.
+                  </li>
+                  <li>
+                    Directed photography and videography teams across international cricket:
+                    <strong>Women’s Premier League</strong>, <strong>ICC Women’s Cricket World Cup 2025</strong>,
+                    <strong>ICC Men’s T20 World Cup warm-ups 2026</strong> and the D.Y. Patil T20
+                    Cup, 2024–2026.
+                  </li>
+                  <li>
+                    Managed coverage for live concerts featuring A.R. Rahman, Darshan Raval,
+                    Coldplay and 50 Cent, coordinating cross-functional teams under tight
+                    deadlines.
+                  </li>
+                  <li>
+                    Oversaw content planning, live coverage, post-production workflows and digital
+                    distribution, raising audience engagement and event visibility.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Photo Circle RAIT</h4>
+                  <p class="entry__role">Chief Coordinator</p>
+                  <p class="entry__when">July 2025 – July 2026 · Navi Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>
+                    Orchestrated 3 on-campus workshops drawing <strong>75+ students</strong> and 4
+                    photography photo walks averaging 20 attendees, growing club participation
+                    <strong>60%</strong>.
+                  </li>
+                  <li>
+                    Led photography and media operations for Horizon, Technovate, DY T20,
+                    ICC-related cricket events, cultural festivals, workshops and inter-college
+                    competitions.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== IV. skills -->
+      <section class="band band--bone" id="skills" data-band="light" aria-labelledby="skills-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">IV</p>
+            <h2 class="opener__title" id="skills-t">Skills</h2>
+            <p class="opener__lede">
+              <span class="drop">P</span>ython and SQL at the centre; everything else earns its
+              place around them.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Stack</h3>
+              <span class="slab__count">06 groups</span>
+            </div>
+
+            <div class="specs" data-reveal-stagger>
+              <div class="spec">
+                <p class="spec__key">Languages</p>
+                <p class="spec__val">
+                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">R</span><span class="chip">JavaScript</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">ML &amp; AI</p>
+                <p class="spec__val">
+                  <span class="chip">Machine Learning</span><span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">Predictive Modeling</span><span class="chip">Feature Engineering</span><span class="chip">Statistical Analysis</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span><span class="chip">BERT</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">MLOps &amp; DevOps</p>
+                <p class="spec__val">
+                  <span class="chip">MLflow</span><span class="chip">DVC</span><span class="chip">Docker</span><span class="chip">FastAPI</span><span class="chip">Jenkins</span><span class="chip">GitHub Actions</span><span class="chip">CI/CD</span><span class="chip">Git</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Data &amp; BI</p>
+                <p class="spec__val">
+                  <span class="chip">Power BI (DAX)</span><span class="chip">Tableau</span><span class="chip">Excel (Advanced)</span><span class="chip">Google Analytics</span><span class="chip">EDA</span><span class="chip">Data Preprocessing</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Databases</p>
+                <p class="spec__val">
+                  <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">SQLite</span><span class="chip">Relational Schema Design</span><span class="chip">Indexing</span><span class="chip">Stored Procedures</span>
+                </p>
+              </div>
+              <div class="spec">
+                <p class="spec__key">Web &amp; Cloud</p>
+                <p class="spec__val">
+                  <span class="chip">React</span><span class="chip">Flask</span><span class="chip">REST APIs</span><span class="chip">Oracle Cloud Infrastructure</span><span class="chip">Business Intelligence</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== V. education -->
+      <section class="band" id="education" data-band="dark" aria-labelledby="education-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">V</p>
+            <h2 class="opener__title" id="education-t">Education</h2>
+            <p class="opener__lede">
+              <span class="drop">C</span>omputer engineering, majoring in artificial intelligence
+              and data science.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Schooling</h3>
+              <span class="slab__count">03</span>
+            </div>
+
+            <div data-reveal-stagger>
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Ramrao Adik Institute of Technology</h4>
+                  <p class="entry__role">D.Y. Patil Deemed University</p>
+                  <p class="entry__when">July 2023 – Present · Navi Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>
+                    <strong>B.Tech in Computer Engineering</strong>, major in Artificial
+                    Intelligence &amp; Data Science.
+                  </li>
+                  <li>CGPA <strong>7.45 / 10</strong>.</li>
+                </ul>
+              </article>
+
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">P.E. Society English Medium High School</h4>
+                  <p class="entry__role">and Junior College</p>
+                  <p class="entry__when">May 2021 – July 2023 · Thane, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>12th Grade, <strong>HSC</strong>.</li>
+                </ul>
+              </article>
+
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">D.A.V. Public School</h4>
+                  <p class="entry__role">Central Board of Secondary Education</p>
+                  <p class="entry__when">May 2008 – April 2021 · Thane, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>10th Grade, <strong>CBSE</strong>.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================== VI. certifications -->
+      <section class="band band--sage" id="certifications" data-band="light" aria-labelledby="certs-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">VI</p>
+            <h2 class="opener__title" id="certs-t">Certifications</h2>
+            <p class="opener__lede">
+              <span class="drop">N</span>ine certifications across cloud, generative AI and the
+              tools the work runs on.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Credentials</h3>
+              <span class="slab__count">09</span>
+            </div>
+
+            <div class="certs" data-reveal-stagger>
+              <article class="cert">
+                <p class="cert__issuer">Oracle</p>
+                <h4 class="cert__name">Oracle Cloud Infrastructure 2025 Certified Data Science Professional</h4>
+                <p class="cert__note">Professional</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">Oracle</p>
+                <h4 class="cert__name">Oracle Cloud Infrastructure 2025 Certified Generative AI Professional</h4>
+                <p class="cert__note">Professional</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">Oracle</p>
+                <h4 class="cert__name">Oracle AI Vector Search Certified Professional</h4>
+                <p class="cert__note">Professional</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">Oracle</p>
+                <h4 class="cert__name">Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h4>
+                <p class="cert__note">Associate</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">SAP</p>
+                <h4 class="cert__name">SAP Certified Back-End Developer — ABAP Cloud</h4>
+                <p class="cert__note">Developer</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">Office Specialist: Excel Associate — Excel and Excel 2019</h4>
+                <p class="cert__note">Associate</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">Office Specialist: Excel Associate</h4>
+                <p class="cert__note">Score 981 / 1000</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">IBM</p>
+                <h4 class="cert__name">Introduction to Generative AI</h4>
+                <p class="cert__note">Course</p>
+              </article>
+              <article class="cert">
+                <p class="cert__issuer">IBM</p>
+                <h4 class="cert__name">AI for Everyone: Master the Basics</h4>
+                <p class="cert__note">Course</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================== VII. beyond work -->
+      <section class="band band--bone" id="beyond" data-band="light" aria-labelledby="beyond-t">
+        <div class="opener">
+          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
+          <div class="opener__inner">
+            <p class="opener__num">VII</p>
+            <h2 class="opener__title" id="beyond-t">Beyond work</h2>
+            <p class="opener__lede">
+              <span class="drop">F</span>our grades of tabla and a state-level badminton finish.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap shift">
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Extracurricular</h3>
+              <span class="slab__count">02</span>
+            </div>
+
+            <div data-reveal-stagger>
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Akhil Bharatiya Gandharva Mahavidyalaya</h4>
+                  <p class="entry__role">Tabla examinations</p>
+                  <p class="entry__when">2016 – 2019 · India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>Cleared <strong>4 national-level examinations</strong> across successive grades.</li>
+                </ul>
+              </article>
+
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Yonex-Sunrise Maharashtra State Masters</h4>
+                  <p class="entry__role">Badminton Championship</p>
+                  <p class="entry__when">2021 · Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li><strong>5th place</strong> finish at state level.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== VIII. contact -->
+      <footer class="band footer" id="contact" data-band="dark" aria-labelledby="contact-t">
+        <svg class="footer__art" aria-hidden="true"><use href="#fig-opener" /></svg>
+
+        <div class="wrap shift footer__body">
+          <div class="footer__lead">
+            <div>
+              <p class="opener__num" data-reveal>VIII</p>
+              <h2 class="footer__title" id="contact-t" data-reveal>
+                Let’s build<br />som<span class="script">e</span>thing.
+              </h2>
+            </div>
+            <p class="status" data-reveal>
+              <span class="status__dot" aria-hidden="true"></span>
+              Open to machine learning, MLOps and analytics roles.
+            </p>
+          </div>
+
+          <!-- The one thing this page is asking for, at the size it deserves. -->
+          <div class="cta" data-reveal>
+            <a class="cta__link" href="mailto:pt47275@gmail.com?subject=Hello%20Parth">
+              <span class="cta__key">Email</span>
+              <span class="cta__value">
+                pt47275@gmail.com
+                <svg class="cta__arrow" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M4 12 12 4M5.6 4H12v6.4" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg>
+              </span>
+            </a>
+            <button class="copy" type="button" data-copy="pt47275@gmail.com">
+              <span data-copy-label>Copy</span>
+            </button>
+          </div>
+
+          <div class="footer__meta" data-reveal-stagger>
+            <div class="fcol">
+              <p class="footer__k">Phone</p>
+              <a class="flink" href="tel:+918369707300">
+                <span>+91 8369 707 300</span>
+                <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" />
+                </svg>
+              </a>
+              <button class="copy copy--sm" type="button" data-copy="+918369707300">
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>
+
+            <div class="fcol">
+              <p class="footer__k">Profiles</p>
+              <a class="flink" href="https://github.com/Parth-Thorat-27" target="_blank" rel="noopener">
+                <span>GitHub</span>
+                <span class="flink__hint">Parth-Thorat-27</span>
+                <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" />
+                </svg>
+              </a>
+              <a class="flink" href="https://www.linkedin.com/in/parth-thorat" target="_blank" rel="noopener">
+                <span>LinkedIn</span>
+                <span class="flink__hint">Parth Thorat</span>
+                <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="fcol">
+              <p class="footer__k">Based in</p>
+              <p class="fval">Thane, Maharashtra<br />India</p>
+              <p class="fmeta">
+                <span data-clock>—:—</span> local time
+              </p>
+            </div>
+          </div>
+
+          <div class="footer__base">
+            <span>&copy; 2026 Parth Ramesh Thorat</span>
+            <a class="totop" href="#top">
+              Back to top
+              <svg viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M6 10V2M2.4 5.6 6 2l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.3" />
+              </svg>
+            </a>
+            <span>Built with the Editions design language</span>
+          </div>
+        </div>
+
+        <p class="sr" role="status" aria-live="polite" data-copy-status></p>
+      </footer>
+    </main>
+
+    <script src="assets/js/portfolio.js" defer></script>
+  </body>
+</html>

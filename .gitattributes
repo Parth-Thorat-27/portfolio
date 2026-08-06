@@ -1,0 +1,16 @@
+# Normalise line endings so the repo is stable across Windows and CI.
+* text=auto eol=lf
+
+# Binaries git must never touch.
+*.woff2 binary
+*.woff  binary
+*.ttf   binary
+*.png   binary
+*.jpg   binary
+*.mp4   binary
+
+# The Shopify mirror is a captured artefact, not source. Keep it out of diffs
+# and language statistics.
+reference/** linguist-vendored
+assets/css/tailwind-*.css linguist-vendored
+reference/editions/index.html -diff

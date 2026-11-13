@@ -23,6 +23,14 @@ Any static host works — the pages are plain HTML, two stylesheets, three scrip
 fonts. The only thing fetched at runtime is the repository list from the GitHub API, and
 the page is complete without it.
 
+## After changing a stylesheet or script
+
+The pages link their CSS and JS with a version on the end (`sections.css?v=3`). GitHub
+Pages lets browsers keep those files for ten minutes and browsers often keep them far
+longer, so a visitor can get the new HTML with the old stylesheet — the page then shows new
+sections with no styling at all. Bump the number in both HTML files whenever a CSS or JS
+file changes, and every browser fetches the new one.
+
 ## Layout
 
 ```

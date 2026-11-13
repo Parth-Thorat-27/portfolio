@@ -3,27 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Parth Ramesh Thorat — AI/DS Engineer &amp; Data Analyst</title>
+    <title>Parth Ramesh Thorat — AI &amp; Data Science Engineer</title>
     <meta
       name="description"
-      content="AI/DS engineer and data analyst in Thane, India. MLOps pipelines, full-stack data products, and BI dashboards — 92% model precision, 40% faster queries, 30% lower latency."
+      content="AI and data-science engineer in Thane, India. Vision-language pipelines on the factory floor, document intelligence with MLOps behind it, and SAP-integrated tools — built from idea to execution."
     />
     <meta name="theme-color" content="#000000" />
     <meta name="author" content="Parth Ramesh Thorat" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Parth Ramesh Thorat — AI/DS Engineer &amp; Data Analyst" />
+    <meta property="og:title" content="Parth Ramesh Thorat — AI &amp; Data Science Engineer" />
     <meta
       property="og:description"
-      content="MLOps pipelines, full-stack data products, and BI dashboards."
+      content="Vision-language pipelines, document intelligence and SAP-integrated tools."
     />
 
     <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/NeueMontreal-Bold.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/HWCigars-Regular.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ImperialScript-Regular.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ImperialScript-Latin.woff2" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/css/fonts.css" />
     <link rel="stylesheet" href="assets/css/portfolio.css" />
+    <link rel="stylesheet" href="assets/css/sections.css" />
+    <!-- Before first paint: the page arrives covered, and the iris opens it. -->
+    <script>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('iris-pending');
+    </script>
   </head>
 
   <body>
@@ -43,7 +48,7 @@
       </symbol>
 
       <symbol id="fig-hero" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-        <g fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+        <g fill="none" stroke="currentColor" stroke-width="1">
           <circle cx="720" cy="450" r="430" />
           <circle cx="720" cy="450" r="690" />
           <circle cx="295" cy="-40" r="620" />
@@ -75,10 +80,13 @@
         <a class="topbar__mark" href="#top">
           <span class="topbar__name">Parth Thorat</span>
         </a>
+        <div class="sides" role="group" aria-label="Which half of the site">
+          <a class="sides__a" href="index.html" aria-current="page">Work</a>
+          <a class="sides__a" href="hobbies.html" data-iris>Off the clock</a>
+        </div>
         <span class="topbar__spacer"></span>
         <nav class="topbar__links" aria-label="Shortcuts">
           <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
           <a href="assets/resume/Parth_Thorat_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
           <a class="pill" href="mailto:pt47275@gmail.com">Get in touch</a>
         </nav>
@@ -95,10 +103,10 @@
         <li class="rail__item"><a href="#skills"><span>Skills</span><span class="rail__leader"></span><span class="rail__num">IV</span></a></li>
         <li class="rail__item"><a href="#education"><span>Education</span><span class="rail__leader"></span><span class="rail__num">V</span></a></li>
         <li class="rail__item"><a href="#certifications"><span>Certifications</span><span class="rail__leader"></span><span class="rail__num">VI</span></a></li>
-        <li class="rail__item"><a href="#beyond"><span>Beyond work</span><span class="rail__leader"></span><span class="rail__num">VII</span></a></li>
-        <li class="rail__item"><a href="#contact"><span>Contact</span><span class="rail__leader"></span><span class="rail__num">VIII</span></a></li>
+        <li class="rail__item"><a href="#contact"><span>Contact</span><span class="rail__leader"></span><span class="rail__num">VII</span></a></li>
       </ul>
       <div class="rail__foot">
+        <a href="hobbies.html" data-iris>Off the clock &rarr;</a>
         <span>&copy; 2026 Parth Thorat</span>
       </div>
     </nav>
@@ -111,29 +119,69 @@
       <a href="#skills">IV&nbsp; Skills</a>
       <a href="#education">V&nbsp; Education</a>
       <a href="#certifications">VI&nbsp; Certifications</a>
-      <a href="#beyond">VII&nbsp; Beyond work</a>
-      <a href="#contact">VIII&nbsp; Contact</a>
+      <a href="#contact">VII&nbsp; Contact</a>
     </nav>
 
     <main id="main">
       <!-- ============================================================ hero -->
       <section class="hero band" id="top" data-band="dark">
-        <svg class="hero__grid" aria-hidden="true"><use href="#fig-hero" /></svg>
+        <div class="hero__pin">
+          <div class="hero__dark">
+            <!-- The same figure as #fig-hero, written out so each line can draw
+                 itself in turn. -->
+            <svg class="hero__grid hero__grid--draw" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" aria-hidden="true">
+              <circle pathLength="1" style="--i: 0" cx="720" cy="450" r="430" />
+              <circle pathLength="1" style="--i: 2" cx="720" cy="450" r="690" />
+              <circle pathLength="1" style="--i: 4" cx="295" cy="-40" r="620" />
+              <circle pathLength="1" style="--i: 6" cx="1150" cy="880" r="560" />
+              <path pathLength="1" style="--i: 3" d="M550 0V900" />
+              <path pathLength="1" style="--i: 4" d="M720 0V900" />
+              <path pathLength="1" style="--i: 5" d="M890 0V900" />
+              <path pathLength="1" style="--i: 6" d="M0 348H1440" />
+              <path pathLength="1" style="--i: 7" d="M0 552H1440" />
+              <path pathLength="1" style="--i: 8" d="M0 0 1440 900" />
+              <path pathLength="1" style="--i: 9" d="M1440 0 0 900" />
+              <rect pathLength="1" style="--i: 10" x="340" y="215" width="130" height="210" />
+              <rect pathLength="1" style="--i: 11" x="340" y="215" width="130" height="130" />
+              <rect pathLength="1" style="--i: 12" x="340" y="345" width="80" height="80" />
+              <rect pathLength="1" style="--i: 13" x="420" y="345" width="50" height="50" />
+              <rect pathLength="1" style="--i: 14" x="440" y="395" width="30" height="30" />
+              <rect pathLength="1" style="--i: 15" x="420" y="395" width="20" height="20" />
+              <path pathLength="1" style="--i: 16" d="M340 345a130 130 0 0 0 130-130" />
+              <path pathLength="1" style="--i: 17" d="M420 345a80 80 0 0 1-80 80" />
+              <path pathLength="1" style="--i: 18" d="M420 395a50 50 0 0 0 50-50" />
+              <path pathLength="1" style="--i: 19" d="M440 425a30 30 0 0 1 30-30" />
+            </svg>
 
-        <div class="hero__frame">
-          <h1 class="hero__title">
-            <span class="hero__line"><span>Parth</span></span>
-            <span class="hero__line"><span>Ram<span class="script">e</span>sh</span></span>
-            <span class="hero__line"><span>Thorat</span></span>
-          </h1>
+            <div class="hero__frame">
+              <h1 class="hero__title">
+              <span class="hero__line"><span>Parth</span></span>
+              <span class="hero__line"><span>Ram<span class="script">e</span>sh</span></span>
+              <span class="hero__line"><span>Thorat</span></span>
+              </h1>
+            </div>
+
+            <div class="hero__hud">
+              <p class="hero__role">AI &amp; Data Science Engineer</p>
+              <p class="hero__where">Thane · Maharashtra · India</p>
+              <p class="hero__scroll"><span>Scroll to open</span></p>
+              <p class="hero__note hero__note--l" aria-hidden="true">19.2183° N<br />72.9781° E</p>
+              <p class="hero__note hero__note--r" aria-hidden="true">Fig. 0<br />1 : 1.618</p>
+            </div>
+          </div>
+
+          <!-- The paper the frame turns into. Clipped to the frame by the
+               script, then opened to the full screen as the page scrolls. -->
+          <div class="hero__paper" aria-hidden="true">
+            <svg class="hero__grid hero__grid--ink"><use href="#fig-hero" /></svg>
+            <p class="hero__title">
+              <span class="hero__line"><span>Parth</span></span>
+              <span class="hero__line"><span>Ram<span class="script">e</span>sh</span></span>
+              <span class="hero__line"><span>Thorat</span></span>
+            </p>
+            <p class="hero__say">Engineer on the clock. Photographer off it.</p>
+          </div>
         </div>
-
-        <div class="hero__meta">
-          <p class="hero__role">AI/DS Engineer &amp; Data Analyst</p>
-          <p class="hero__where">Thane · Maharashtra · India</p>
-        </div>
-
-        <p class="hero__scroll"><span>Scroll</span></p>
       </section>
 
       <!-- ======================================================= I. profile -->
@@ -144,13 +192,21 @@
             <p class="opener__num">I</p>
             <h2 class="opener__title" id="profile-t">Profile</h2>
             <p class="opener__lede">
-              <span class="drop">M</span>LOps workflows, full-stack data solutions and BI
-              visualizations — built end to end.
+              <span class="drop">V</span>ision models, document pipelines and SAP-integrated
+              tools — built from idea to execution.
             </p>
           </div>
         </div>
 
         <div class="wrap shift">
+          <p class="statement" data-scrub>
+            I’m Parth — a computer-science undergraduate from Thane, specialising in AI and data
+            science. I like taking a thing from idea to execution: this summer that meant a
+            vision-language model reading damaged tags on a factory floor and writing the answer
+            back to the machines. Away from the keyboard I run photo and video crews at stadium
+            scale, which is the other half of this site.
+          </p>
+
           <div class="slab">
             <div class="slab__head" data-reveal>
               <h3>Currently</h3>
@@ -160,27 +216,29 @@
               <div class="spec">
                 <p class="spec__key">Role</p>
                 <p class="spec__val spec__val--text">
-                  AI/DS engineer and data analyst. I build the whole path — data pipeline,
-                  model, deployment, and the dashboard the decision actually gets made from.
+                  AI and data-science engineer. Most recently an Artificial Intelligence Intern
+                  at MDIAS India, Pune — an on-premise vision-language pipeline wired into plant
+                  automation.
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">Studying</p>
                 <p class="spec__val spec__val--text">
-                  B.Tech Computer Engineering, majoring in Artificial Intelligence &amp; Data
-                  Science, at Ramrao Adik Institute of Technology, D.Y. Patil Deemed University.
+                  B.Tech in Computer Science Engineering, majoring in Artificial Intelligence
+                  &amp; Data Science, at Ramrao Adik Institute of Technology, D.Y. Patil Deemed
+                  University.
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">Working with</p>
                 <p class="spec__val">
-                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span><span class="chip">BERT</span><span class="chip">MLflow</span><span class="chip">Docker</span><span class="chip">FastAPI</span><span class="chip">Power BI</span><span class="chip">React</span>
+                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Vision-language models</span><span class="chip">BERT</span><span class="chip">FastAPI</span><span class="chip">MLflow</span><span class="chip">Docker</span><span class="chip">ABAP Cloud</span><span class="chip">S/4HANA APIs</span><span class="chip">Power BI</span>
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">Open to</p>
                 <p class="spec__val spec__val--text">
-                  Machine learning engineering, MLOps, and analytics roles.
+                  Machine learning engineering, MLOps, and SAP-side AI roles.
                 </p>
               </div>
             </div>
@@ -193,12 +251,12 @@
             </div>
             <div class="stats" data-reveal-stagger>
               <div class="stat">
-                <p class="stat__value" data-count="92" data-suffix="%">92%</p>
-                <p class="stat__label">Precision from the churn ensemble — logistic regression, random forest and XGBoost.</p>
+                <p class="stat__value" data-count="90" data-suffix="%">90%</p>
+                <p class="stat__label">Accuracy target for reads the plant pipeline commits without an operator.</p>
               </div>
               <div class="stat">
-                <p class="stat__value" data-count="40" data-suffix="%">40%</p>
-                <p class="stat__label">Faster queries after normalising the schema and adding indexes.</p>
+                <p class="stat__value">&lt;1 min</p>
+                <p class="stat__label">From a hardware trigger to a verified code written back over OPC UA and Modbus.</p>
               </div>
               <div class="stat">
                 <p class="stat__value" data-count="40" data-suffix="%">40%</p>
@@ -206,15 +264,15 @@
               </div>
               <div class="stat">
                 <p class="stat__value" data-count="30" data-suffix="%">30%</p>
-                <p class="stat__label">Lower invoice data-retrieval latency via SQLite index optimisation.</p>
+                <p class="stat__label">Faster retrieval behind PocketCA’s real-time metrics, from schema and index design.</p>
               </div>
               <div class="stat">
-                <p class="stat__value" data-count="60" data-suffix="%">60%</p>
-                <p class="stat__label">More actionable insight than the static reports the dashboards replaced.</p>
+                <p class="stat__value" data-count="4" data-suffix="th">4th</p>
+                <p class="stat__label">Place at the I-HACK Hackathon, with PocketCA.</p>
               </div>
               <div class="stat">
-                <p class="stat__value" data-count="15" data-suffix="%">15%</p>
-                <p class="stat__label">Recall improvement over baseline through feature engineering.</p>
+                <p class="stat__value" data-count="4" data-suffix="-bit">4-bit</p>
+                <p class="stat__label">Quantisation that lets the vision-language model run on-premise, at the edge.</p>
               </div>
             </div>
           </div>
@@ -229,8 +287,8 @@
             <p class="opener__num">II</p>
             <h2 class="opener__title" id="projects-t">Projects</h2>
             <p class="opener__lede">
-              <span class="drop">B</span>uilds where the model, the pipeline and the dashboard
-              shipped together, each with a number attached.
+              <span class="drop">E</span>ight builds, seven of them open on GitHub — each one
+              taken from idea to execution.
             </p>
           </div>
         </div>
@@ -239,104 +297,340 @@
           <div class="slab">
             <div class="slab__head" data-reveal>
               <h3>Selected work</h3>
-              <span class="slab__count">04</span>
+              <span class="slab__count">08 · 07 on GitHub</span>
             </div>
 
-            <div class="projects" data-reveal-stagger>
-              <article class="project">
-                <div class="project__top">
-                  <span class="project__num">01</span>
-                  <h4 class="project__name">PocketCA</h4>
-                </div>
-                <p class="project__stack">React · Vite · Flask · SQLite · Qwen2.5-VL · OCR</p>
-                <ul class="bullets project__points">
-                  <li>
-                    A React and Vite SPA on a Flask REST API, rendering financial metrics
-                    client-side in real time. SQLite index tuning cut invoice retrieval latency
-                    <strong>30%</strong>.
-                  </li>
-                  <li>
-                    A fuzzy-matching reconciliation engine parses supplier GSTINs, dates and
-                    invoice headers, sorting filing mismatches into actionable statuses.
-                  </li>
-                  <li>
-                    Localised across English, Hindi and Hinglish, with automated QA suites
-                    covering visual regression.
-                  </li>
-                </ul>
-                <div class="chips">
-                  <span class="chip chip--solid">30% lower latency</span>
-                </div>
-              </article>
-
-              <article class="project">
-                <div class="project__top">
-                  <span class="project__num">02</span>
-                  <h4 class="project__name">Banking AI Document Intelligence</h4>
-                </div>
-                <p class="project__stack">Python · BERT · OCR · MLflow · DVC · Docker · FastAPI</p>
-                <ul class="bullets project__points">
-                  <li>
-                    Runs banking and KYC documents through OCR, classification and BERT
-                    extraction, <strong>cutting manual review time 40%</strong>.
-                  </li>
-                  <li>
-                    Reproducible MLOps end to end: MLflow tracking, DVC versioning, CI/CD through
-                    Jenkins and GitHub Actions, containerised on Docker and FastAPI.
-                  </li>
-                </ul>
-                <div class="chips">
-                  <span class="chip chip--solid">40% less manual review</span>
+            <!-- The résumé's lead project, then one plate per public repository. The copy is written here so the
+                 page reads without a network; work.js then asks the GitHub API
+                 for anything pushed since and lists repositories this markup
+                 has not heard of yet. -->
+            <div class="plates" data-plates>
+              <article class="plate">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <rect x="60" y="56" width="96" height="118" />
+                      <path class="dim" d="M74 82h50M74 102h68M74 122h68M74 142h40" />
+                      <rect x="244" y="56" width="96" height="118" />
+                      <path class="dim" d="M258 82h50M258 102h68M258 122h68M258 142h40" />
+                      <rect x="152" y="236" width="96" height="118" />
+                      <path class="dim" d="M166 262h50M166 282h68M166 302h68M166 322h40" />
+                      <path class="a-flow" d="M156 115H244M118 174 172 236M282 174 228 236" />
+                      <circle cx="200" cy="170" r="17" />
+                      <path d="M192 170l6 6 11-12" />
+                      <circle class="a-pulse" cx="200" cy="205" r="150" />
+                      <path d="M136 198l10 12M146 198l-10 12" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 01 — Three-way match</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>01 / 08</span><span>Python · S/4HANA</span><span>Not on GitHub yet</span>
+                    </p>
+                    <h4 class="plate__name">SAP Invoice Exception Manager</h4>
+                    <p class="plate__tag">Invoices, purchase orders and goods receipts, matched before a person has to look.</p>
+                    <ul class="bullets">
+                      <li>Automates the three-way match across supplier invoices, purchase orders and goods receipts, pulling all three through S/4HANA OData services.</li>
+                      <li>Matching rules sort quantity, price and duplicate-invoice mismatches into actionable exception statuses.</li>
+                      <li>An OCR ingestion layer scores every field, <strong>auto-clears the high-confidence invoices</strong> and sends only the exceptions to a reviewer queue.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">Three-way match</span><span class="chip">S/4HANA OData</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">OCR</span></div>
+                  </div>
                 </div>
               </article>
 
-              <article class="project">
-                <div class="project__top">
-                  <span class="project__num">03</span>
-                  <h4 class="project__name">Customer Churn Prediction</h4>
-                </div>
-                <p class="project__stack">Python · SQL · Scikit-learn · XGBoost · Power BI · Tableau</p>
-                <ul class="bullets project__points">
-                  <li>
-                    An ensemble of logistic regression, random forest and XGBoost at
-                    <strong>92% precision</strong>, with feature engineering lifting recall
-                    <strong>15%</strong> over baseline.
-                  </li>
-                  <li>
-                    A normalised schema with indexing for <strong>40% faster queries</strong>;
-                    threshold tuning cut false negatives on high-value customers.
-                  </li>
-                  <li>
-                    Power BI and Tableau dashboards with drill-downs, slicers and DAX for
-                    executive stakeholders.
-                  </li>
-                </ul>
-                <div class="chips">
-                  <span class="chip chip--solid">92% precision</span>
+              <article class="plate" data-repo="vinyl">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <g class="a-spin">
+                        <circle cx="200" cy="200" r="168" />
+                        <circle class="dim" cx="200" cy="200" r="150" />
+                        <circle class="dim" cx="200" cy="200" r="132" />
+                        <circle class="dim" cx="200" cy="200" r="114" />
+                        <circle class="dim" cx="200" cy="200" r="96" />
+                        <path d="M200 41a159 159 0 0 1 112 47" />
+                        <path d="M200 323a123 123 0 0 1-87-36" />
+                        <circle cx="200" cy="200" r="58" />
+                        <path d="M200 142v22M158 200h-16" />
+                        <circle class="solid" cx="200" cy="200" r="4" />
+                      </g>
+                      <g class="a-arm">
+                        <circle cx="350" cy="60" r="13" />
+                        <circle class="solid" cx="350" cy="60" r="3" />
+                        <path d="M350 60 300 160" />
+                        <path d="M290 155l20 10" />
+                        <circle cx="300" cy="160" r="5" />
+                      </g>
+                    </svg>
+                    <p class="plate__figcap">Fig. 02 — 33⅓ rpm</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>02 / 08</span><span>JavaScript</span><span data-repo-pushed>Updated Nov 2026</span>
+                    </p>
+                    <h4 class="plate__name">Vinyl</h4>
+                    <p class="plate__tag">A turntable for YouTube Music and Spotify, with private listening rooms.</p>
+                    <ul class="bullets">
+                      <li>The record spins, the tonearm tracks the song’s progress, and the whole theme re-colours itself from the album art.</li>
+                      <li>One queue mixes Spotify and YouTube Music. It runs on a PC and reaches phones and tablets over Wi-Fi by QR code.</li>
+                      <li><strong>Private rooms</strong> with voice chat, served over a self-issued certificate so a phone’s microphone is allowed.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">Listening rooms</span><span class="chip">Node.js</span><span class="chip">YouTube Data API</span><span class="chip">Spotify Web Playback</span><span class="chip">Docker</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/vinyl" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/vinyl</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
                 </div>
               </article>
+              <article class="plate" data-repo="IFRS-9-Expected-Credit-Loss-Engine">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <path d="M60 60V340H360" />
+                      <path class="dim dash" d="M110 340V70M160 340V70M210 340V70M260 340V70M310 340V70M360 340V70" />
+                      <path d="M60 300C150 292 250 250 360 190" />
+                      <path class="dim" d="M60 300C150 296 250 276 360 246" />
+                      <path class="dim" d="M60 300C150 284 250 200 360 96" />
+                      <circle class="solid" cx="360" cy="190" r="4" />
+                      <circle cx="360" cy="246" r="4" />
+                      <circle cx="360" cy="96" r="4" />
+                      <rect x="76" y="76" width="118" height="12" />
+                      <rect class="dim" x="76" y="96" width="30" height="12" />
+                      <rect class="dim" x="76" y="116" width="18" height="12" />
+                      <path class="a-sweep dim" d="M60 70V340" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 03 — Three scenarios</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>03 / 08</span><span>Python · PL/SQL</span><span data-repo-pushed>Updated Oct 2026</span>
+                    </p>
+                    <h4 class="plate__name">IFRS 9 ECL Engine</h4>
+                    <p class="plate__tag">The monthly provisioning run a bank does, built small and end to end.</p>
+                    <ul class="bullets">
+                      <li>Loads each month’s loan book into Oracle, rejects bad rows with a data-quality rules engine, scores every loan’s probability of default and assigns it to Stage 1, 2 or 3.</li>
+                      <li>Expected credit loss under three economic scenarios with RBI provision floors: <strong>83,720 loans</strong>, a <strong>$773.6M</strong> book, <strong>6.69%</strong> coverage at the last month-end.</li>
+                      <li>One batch script runs the month — logged, locked, and restartable from the step that failed.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">6.69% coverage</span><span class="chip">Oracle</span><span class="chip">PL/SQL</span><span class="chip">scikit-learn</span><span class="chip">pandas</span><span class="chip">Bash</span><span class="chip">Power BI</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/IFRS-9-Expected-Credit-Loss-Engine" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/IFRS-9-Expected-Credit-Loss-Engine</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+              <article class="plate" data-repo="POCKET_CA">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <rect x="56" y="64" width="130" height="176" />
+                      <path class="dim" d="M72 92h70M72 116h98M72 140h98M72 164h98M72 188h98M72 212h54" />
+                      <path class="a-scan" d="M46 78h150" />
+                      <rect x="214" y="160" width="130" height="176" />
+                      <path class="dim" d="M230 188h98M230 212h98M230 236h98M230 260h98M230 284h98M230 308h54" />
+                      <path class="a-flow" d="M170 116C204 116 196 212 230 212M170 140C204 140 196 236 230 236M170 188C204 188 196 284 230 284" />
+                      <path d="M170 164h20M196 158l10 12M206 158l-10 12" />
+                      <path d="M352 208l4 4 8-9M352 232l4 4 8-9M352 280l4 4 8-9" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 04 — Invoice ⇄ GSTR-2B</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>04 / 08</span><span>React · Flask</span><span data-repo-pushed>Updated Oct 2026</span>
+                    </p>
+                    <h4 class="plate__name">Pocket CA</h4>
+                    <p class="plate__tag">A chartered accountant in your pocket, for GST compliance and ITC recovery.</p>
+                    <ul class="bullets">
+                      <li>A vision-language OCR pipeline turns scanned invoices into structured GST data — GSTIN, HSN codes, taxable value, CGST, SGST and IGST.</li>
+                      <li>A reconciliation engine matches invoices against GSTR-2B, flags duplicates and mismatches, and estimates the input tax credit that can be recovered.</li>
+                      <li>A local Llama 3.2 model explains each issue in plain language. The SQLite schema and indexes behind the real-time metrics cut retrieval time <strong>30%</strong>.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">4th place · I-HACK Hackathon</span><span class="chip">30% faster retrieval</span><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Flask</span><span class="chip">SQLite</span><span class="chip">Qwen2.5-VL</span><span class="chip">OCR</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/POCKET_CA" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/POCKET_CA</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+              <article class="plate" data-repo="iot-nilm-energy-analytics">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <path class="dim" d="M40 170H360" />
+                      <path d="M40 160H84V112H140V66H196V112H246V92H292V140H332V160H360" />
+                      <path class="dim dash" d="M84 56V350M140 56V350M196 56V350M246 56V350M292 56V350M332 56V350" />
+                      <path d="M40 232H84V212H292V232H360" />
+                      <path d="M40 284H140V264H196V284H360" />
+                      <path d="M40 336H246V322H332V336H360" />
+                      <path class="a-sweep" d="M40 56V350" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 05 — One signal, three loads</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>05 / 08</span><span>Python · C++</span><span data-repo-pushed>Updated Sep 2026</span>
+                    </p>
+                    <h4 class="plate__name">IoT NILM Energy Analytics</h4>
+                    <p class="plate__tag">One current sensor on a room’s supply, split back into the appliances behind it.</p>
+                    <ul class="bullets">
+                      <li>An ESP32 samples an ACS712 at <strong>2 kHz</strong>, computes true RMS over ten-cycle windows and publishes it over MQTT once a second.</li>
+                      <li>Step detection and a random forest disaggregate the single signal into per-appliance activity; an isolation forest scores anomalies.</li>
+                      <li>A rules engine flags wasted energy — night-time use, standby load, things left on — into InfluxDB and a Grafana dashboard, all in Docker.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">Non-intrusive load monitoring</span><span class="chip">ESP32</span><span class="chip">MQTT</span><span class="chip">InfluxDB</span><span class="chip">Grafana</span><span class="chip">scikit-learn</span><span class="chip">Docker</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/iot-nilm-energy-analytics" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/iot-nilm-energy-analytics</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+              <article class="plate" data-repo="calling-system">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <path class="a-bar" style="--i: 0" d="M48 170V230" />
+                      <path class="a-bar" style="--i: 1" d="M60 148V252" />
+                      <path class="a-bar" style="--i: 2" d="M72 178V222" />
+                      <path class="a-bar" style="--i: 3" d="M84 136V264" />
+                      <path class="a-bar" style="--i: 4" d="M96 160V240" />
+                      <path class="a-bar" style="--i: 5" d="M108 126V274" />
+                      <path class="a-bar" style="--i: 6" d="M120 166V234" />
+                      <path class="a-bar" style="--i: 7" d="M132 142V258" />
+                      <path class="a-bar" style="--i: 8" d="M144 174V226" />
+                      <path class="a-bar" style="--i: 9" d="M156 154V246" />
+                      <path class="a-bar" style="--i: 10" d="M168 134V266" />
+                      <path class="a-bar" style="--i: 11" d="M180 180V220" />
+                      <path class="a-flow" d="M196 200H238" />
+                      <path d="M232 194l6 6-6 6" />
+                      <rect x="252" y="120" width="108" height="160" />
+                      <path class="dim" d="M252 152h108M252 184h108M252 216h108M252 248h108M294 120v160" />
+                      <path class="dim" d="M262 136h22M262 168h22M262 200h22M262 232h22M262 264h22" />
+                      <path class="a-blink" style="--i: 0" d="M304 136h44" />
+                      <path class="a-blink" style="--i: 1" d="M304 168h30" />
+                      <path class="a-blink" style="--i: 2" d="M304 200h40" />
+                      <path class="a-blink" style="--i: 3" d="M304 232h24" />
+                      <path class="a-blink" style="--i: 4" d="M304 264h36" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 06 — Speech to rows</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>06 / 08</span><span>Python</span><span data-repo-pushed>Updated Jul 2026</span>
+                    </p>
+                    <h4 class="plate__name">Retail Survey AI</h4>
+                    <p class="plate__tag">A voice agent that phones retailers, runs the survey and files the answers.</p>
+                    <ul class="bullets">
+                      <li>Asks a scripted survey, understands the spoken replies and writes structured rows straight into the database.</li>
+                      <li>Entirely local: Qwen 2.5 through Ollama for extraction, faster-whisper for speech-to-text, Kokoro and Piper for speech — Piper for Hindi, where it tested better.</li>
+                      <li>A FastAPI backend with <strong>111 tests</strong>, a Romanised-Hindi numeral parser, and an evaluation script that scores the real model on fixed cases.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">Runs fully offline</span><span class="chip">FastAPI</span><span class="chip">Ollama</span><span class="chip">faster-whisper</span><span class="chip">Kokoro</span><span class="chip">Piper</span><span class="chip">pytest</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/calling-system" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/calling-system</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+              <article class="plate" data-repo="banking-doc-pipeline">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <path class="dim" d="M84 76V64H254V284H242M96 64V52H266V272H254" />
+                      <rect x="72" y="76" width="170" height="220" />
+                      <path class="dim" d="M90 108h90M90 132h64M90 156h134M162 180h62M90 204h134M90 228h70M90 262h110" />
+                      <rect x="162" y="122" width="64" height="20" />
+                      <rect x="88" y="170" width="64" height="20" />
+                      <path d="M226 132H300M152 180H158M242 200H300" />
+                      <circle cx="307" cy="132" r="7" />
+                      <circle cx="307" cy="200" r="7" />
+                      <path class="dim" d="M322 132h40M322 200h28" />
+                      <path class="a-scan dim" d="M62 92h190" />
+                      <circle cx="84" cy="350" r="9" /><circle cx="162" cy="350" r="9" /><circle cx="240" cy="350" r="9" /><circle cx="318" cy="350" r="9" />
+                      <circle class="solid" cx="318" cy="350" r="4" />
+                      <path class="a-flow" d="M93 350H153M171 350H231M249 350H309" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 07 — Extract, then verify</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>07 / 08</span><span>Python</span><span data-repo-pushed>Updated Jul 2026</span>
+                    </p>
+                    <h4 class="plate__name">Banking AI Document Intelligence</h4>
+                    <p class="plate__tag">Banking and KYC documents through OCR, classification and entity extraction.</p>
+                    <ul class="bullets">
+                      <li>A BERT NER model pulls the fields a reviewer would otherwise key in by hand, <strong>cutting manual review time 40%</strong>.</li>
+                      <li>Reproducible end to end: MLflow tracking, DVC-versioned params and data, tests, and CI/CD through Jenkins and GitHub Actions.</li>
+                      <li>Served from a Docker container as a FastAPI service with its own small web front end.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">40% less manual review</span><span class="chip">BERT</span><span class="chip">MLflow</span><span class="chip">DVC</span><span class="chip">Jenkins</span><span class="chip">Docker</span><span class="chip">FastAPI</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/banking-doc-pipeline" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/banking-doc-pipeline</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+              <article class="plate" data-repo="MUSEUMSCAT">
+                <div class="plate__inner">
+                  <div class="plate__fig">
+                    <svg class="fig" viewBox="0 0 400 400" aria-hidden="true">
+                      <rect class="frame-box" x="0.5" y="0.5" width="399" height="399" />
+                      <path d="M200 56C292 120 296 262 200 346C104 262 108 120 200 56Z" />
+                      <path d="M200 56V372" />
+                      <path class="dim" d="M200 130l50-32M200 130l-50-32M200 180l66-36M200 180l-66-36M200 230l64-30M200 230l-64-30M200 280l44-22M200 280l-44-22" />
+                      <rect class="dim dash" x="92" y="40" width="216" height="338" />
+                      <path d="M84 56V32H108M292 32h24v24M316 362v24h-24M108 386H84V362" />
+                      <circle class="a-pulse" cx="200" cy="205" r="120" />
+                      <path class="dim" d="M324 120h40M324 136h26" />
+                    </svg>
+                    <p class="plate__figcap">Fig. 08 — Specimen, labelled</p>
+                  </div>
+                  <div class="plate__body">
+                    <p class="plate__meta">
+                      <span>08 / 08</span><span>Jupyter Notebook</span><span data-repo-pushed>Updated Jul 2026</span><span>Fork</span>
+                    </p>
+                    <h4 class="plate__name">Museumscat</h4>
+                    <p class="plate__tag">A vision-language pipeline that reads herbarium specimen sheets.</p>
+                    <ul class="bullets">
+                      <li>Notebook-driven pipeline, iterated across three versions, that takes specimen images through a VLM and writes out catalogue predictions.</li>
+                      <li>Scores its own output: evaluation and production runs each ship with a confidence analysis, so low-certainty rows can be sent to a person.</li>
+                    </ul>
+                    <div class="chips"><span class="chip chip--solid">Team project</span><span class="chip">Vision-language model</span><span class="chip">Python</span><span class="chip">Jupyter</span></div>
+                    <a class="flink plate__link" href="https://github.com/Parth-Thorat-27/MUSEUMSCAT" target="_blank" rel="noopener">
+                      <span>Repository</span>
+                      <span class="flink__hint">Parth-Thorat-27/MUSEUMSCAT</span>
+                      <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </div>
 
-              <article class="project">
-                <div class="project__top">
-                  <span class="project__num">04</span>
-                  <h4 class="project__name">BI &amp; Reservation Management</h4>
-                </div>
-                <p class="project__stack">Power BI · Tableau · Excel · SQL · DAX</p>
-                <ul class="bullets project__points">
-                  <li>
-                    Executive dashboards with real-time KPIs, drill-downs and slicers, joining
-                    multiple sources through DAX for <strong>60% more actionable insight</strong>
-                    than the static reports they replaced.
-                  </li>
-                  <li>
-                    A SQL-based airline reservation system covering flight schedules, bookings,
-                    passenger data, payments and check-in.
-                  </li>
-                </ul>
-                <div class="chips">
-                  <span class="chip chip--solid">60% more insight</span>
-                </div>
-              </article>
+            <div class="repos" data-repos hidden>
+              <div class="slab__head is-in">
+                <h3>Also on GitHub</h3>
+                <span class="slab__count" data-repos-count></span>
+              </div>
+              <div data-repos-list></div>
             </div>
           </div>
         </div>
@@ -350,8 +644,8 @@
             <p class="opener__num">III</p>
             <h2 class="opener__title" id="experience-t">Experience</h2>
             <p class="opener__lede">
-              <span class="drop">T</span>wo years running media at stadium scale, on deadlines
-              that do not move.
+              <span class="drop">A</span> summer on the factory floor, putting a vision model
+              to work beside the machines.
             </p>
           </div>
         </div>
@@ -360,56 +654,32 @@
           <div class="slab">
             <div class="slab__head" data-reveal>
               <h3>Roles</h3>
-              <span class="slab__count">02</span>
+              <span class="slab__count">01</span>
             </div>
 
             <div data-reveal-stagger>
               <article class="entry">
                 <div>
-                  <h4 class="entry__org">Student Union Council — RAIT</h4>
-                  <p class="entry__role">Media Head</p>
-                  <p class="entry__when">July 2024 – July 2026 · Navi Mumbai, India</p>
+                  <h4 class="entry__org">MDIAS India Pvt. Ltd.</h4>
+                  <p class="entry__role">Artificial Intelligence Intern</p>
+                  <p class="entry__when">May 2026 – September 2026 · Pune, India</p>
                 </div>
                 <ul class="bullets entry__points">
                   <li>
-                    Led media strategy, event documentation and digital content operations for
-                    large-scale sporting, entertainment and university events at D.Y. Patil
-                    Stadium.
+                    <strong>Deployed an on-premise VLM pipeline:</strong> an edge-deployed, 4-bit
+                    quantised vision-language model that reads damaged tags, handwritten chalk
+                    marks and stencils where conventional scanners fail.
                   </li>
                   <li>
-                    Directed photography and videography teams across international cricket:
-                    <strong>Women’s Premier League</strong>, <strong>ICC Women’s Cricket World Cup 2025</strong>,
-                    <strong>ICC Men’s T20 World Cup warm-ups 2026</strong> and the D.Y. Patil T20
-                    Cup, 2024–2026.
+                    <strong>Integrated industrial PLC/SCADA automation:</strong> an OPC UA and
+                    Modbus TCP interface on FastAPI that ingests hardware triggers and writes back
+                    verified codes in under a minute.
                   </li>
                   <li>
-                    Managed coverage for live concerts featuring A.R. Rahman, Darshan Raval,
-                    Coldplay and 50 Cent, coordinating cross-functional teams under tight
-                    deadlines.
-                  </li>
-                  <li>
-                    Oversaw content planning, live coverage, post-production workflows and digital
-                    distribution, raising audience engagement and event visibility.
-                  </li>
-                </ul>
-              </article>
-
-              <article class="entry">
-                <div>
-                  <h4 class="entry__org">Photo Circle RAIT</h4>
-                  <p class="entry__role">Chief Coordinator</p>
-                  <p class="entry__when">July 2025 – July 2026 · Navi Mumbai, India</p>
-                </div>
-                <ul class="bullets entry__points">
-                  <li>
-                    Orchestrated 3 on-campus workshops drawing <strong>75+ students</strong> and 4
-                    photography photo walks averaging 20 attendees, growing club participation
-                    <strong>60%</strong>.
-                  </li>
-                  <li>
-                    Led photography and media operations for Horizon, Technovate, DY T20,
-                    ICC-related cricket events, cultural festivals, workshops and inter-college
-                    competitions.
+                    <strong>Designed confidence-gated validation:</strong> a schema parser with
+                    format masks, check-digit validation and confidence thresholds that
+                    auto-commits accurate reads (90% accuracy target) and routes edge cases to an
+                    operator HMI.
                   </li>
                 </ul>
               </article>
@@ -427,7 +697,7 @@
             <h2 class="opener__title" id="skills-t">Skills</h2>
             <p class="opener__lede">
               <span class="drop">P</span>ython and SQL at the centre; everything else earns its
-              place around them.
+              place around them — SAP included.
             </p>
           </div>
         </div>
@@ -436,20 +706,48 @@
           <div class="slab">
             <div class="slab__head" data-reveal>
               <h3>Stack</h3>
-              <span class="slab__count">06 groups</span>
+              <span class="slab__count">07 groups</span>
+            </div>
+
+            <div class="skills">
+            <div class="orbit" data-orbit aria-hidden="true">
+              <svg viewBox="-300 -300 600 600">
+                <circle r="50" /><circle r="100" /><circle r="185" /><circle r="270" />
+                <path d="M-300 0H-50M50 0H300M0 -300V-50M0 50V300" />
+              </svg>
+              <p class="orbit__core">Python<span class="script">&amp;</span>SQL</p>
+              <span class="orbit__item" data-ring="0">Pandas</span>
+              <span class="orbit__item" data-ring="0">NumPy</span>
+              <span class="orbit__item" data-ring="0">BERT</span>
+              <span class="orbit__item" data-ring="0">FastAPI</span>
+              <span class="orbit__item" data-ring="1">MLflow</span>
+              <span class="orbit__item" data-ring="1">Docker</span>
+              <span class="orbit__item" data-ring="1">ABAP Cloud</span>
+              <span class="orbit__item" data-ring="1">DVC</span>
+              <span class="orbit__item" data-ring="1">Power BI</span>
+              <span class="orbit__item" data-ring="1">Tableau</span>
+              <span class="orbit__item" data-ring="2">Jenkins</span>
+              <span class="orbit__item" data-ring="2">S/4HANA APIs</span>
+              <span class="orbit__item" data-ring="2">MySQL</span>
+              <span class="orbit__item" data-ring="2">GitHub Actions</span>
+              <span class="orbit__item" data-ring="2">MongoDB</span>
+              <span class="orbit__item" data-ring="2">Excel</span>
+              <span class="orbit__item" data-ring="2">SQLite</span>
+              <span class="orbit__item" data-ring="2">REST APIs</span>
+              <span class="orbit__item" data-ring="2">Oracle Cloud</span>
             </div>
 
             <div class="specs" data-reveal-stagger>
               <div class="spec">
                 <p class="spec__key">Languages</p>
                 <p class="spec__val">
-                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">R</span><span class="chip">JavaScript</span>
+                  <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Java (fundamental)</span>
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">ML &amp; AI</p>
                 <p class="spec__val">
-                  <span class="chip">Machine Learning</span><span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">Predictive Modeling</span><span class="chip">Feature Engineering</span><span class="chip">Statistical Analysis</span><span class="chip">Scikit-learn</span><span class="chip">XGBoost</span><span class="chip">BERT</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
+                  <span class="chip">Machine Learning</span><span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">BERT</span><span class="chip">Vision-language models</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
                 </p>
               </div>
               <div class="spec">
@@ -461,21 +759,29 @@
               <div class="spec">
                 <p class="spec__key">Data &amp; BI</p>
                 <p class="spec__val">
-                  <span class="chip">Power BI (DAX)</span><span class="chip">Tableau</span><span class="chip">Excel (Advanced)</span><span class="chip">Google Analytics</span><span class="chip">EDA</span><span class="chip">Data Preprocessing</span>
+                  <span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Excel (Advanced)</span>
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">Databases</p>
                 <p class="spec__val">
-                  <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">SQLite</span><span class="chip">Relational Schema Design</span><span class="chip">Indexing</span><span class="chip">Stored Procedures</span>
+                  <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">SQLite</span>
                 </p>
               </div>
               <div class="spec">
                 <p class="spec__key">Web &amp; Cloud</p>
                 <p class="spec__val">
-                  <span class="chip">React</span><span class="chip">Flask</span><span class="chip">REST APIs</span><span class="chip">Oracle Cloud Infrastructure</span><span class="chip">Business Intelligence</span>
+                  <span class="chip">REST APIs</span><span class="chip">Oracle Cloud Infrastructure (OCI)</span><span class="chip">Business Intelligence</span>
                 </p>
               </div>
+              <div class="spec">
+                <p class="spec__key">SAP</p>
+                <p class="spec__val">
+                  <span class="chip">ABAP Cloud</span><span class="chip">S/4HANA APIs</span><span class="chip">ABAP Dictionary</span><span class="chip">OOPS ABAP</span>
+                </p>
+              </div>
+            </div>
+            </div>
             </div>
           </div>
         </div>
@@ -489,8 +795,8 @@
             <p class="opener__num">V</p>
             <h2 class="opener__title" id="education-t">Education</h2>
             <p class="opener__lede">
-              <span class="drop">C</span>omputer engineering, majoring in artificial intelligence
-              and data science.
+              <span class="drop">C</span>omputer science engineering, majoring in artificial
+              intelligence and data science — and two years running campus media alongside it.
             </p>
           </div>
         </div>
@@ -511,8 +817,8 @@
                 </div>
                 <ul class="bullets entry__points">
                   <li>
-                    <strong>B.Tech in Computer Engineering</strong>, major in Artificial
-                    Intelligence &amp; Data Science.
+                    <strong>B.Tech in Computer Science Engineering</strong>, major in
+                    Artificial Intelligence &amp; Data Science.
                   </li>
                   <li>CGPA <strong>7.45 / 10</strong>.</li>
                 </ul>
@@ -541,6 +847,68 @@
               </article>
             </div>
           </div>
+
+          <div class="marquee marquee--flush" aria-label="Events covered">
+            <div class="marquee__row" data-marquee>
+              <span>Women’s Premier League</span><span class="x">&amp;</span>
+              <span class="o">ICC World Cup</span><span class="x">&amp;</span>
+              <span>D.Y. Patil T20 Cup</span><span class="x">&amp;</span>
+              <span class="o">Horizon</span><span class="x">&amp;</span>
+              <span>Technovate</span><span class="x">&amp;</span>
+            </div>
+            <div class="marquee__row" data-marquee="reverse">
+              <span class="o">A.R. Rahman</span><span class="x">&amp;</span>
+              <span>Coldplay</span><span class="x">&amp;</span>
+              <span class="o">Darshan Raval</span><span class="x">&amp;</span>
+              <span>50 Cent</span><span class="x">&amp;</span>
+            </div>
+          </div>
+
+          <div class="slab">
+            <div class="slab__head" data-reveal>
+              <h3>Extracurricular</h3>
+              <span class="slab__count">02</span>
+            </div>
+
+            <div data-reveal-stagger>
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Student Union Council — RAIT</h4>
+                  <p class="entry__role">Media Head</p>
+                  <p class="entry__when">July 2024 – July 2026 · Navi Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>
+                    Led end-to-end media strategy, event documentation, content production and
+                    digital distribution for major sporting, entertainment and university events
+                    at D.Y. Patil Stadium.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="entry">
+                <div>
+                  <h4 class="entry__org">Photo Circle RAIT</h4>
+                  <p class="entry__role">Chief Coordinator</p>
+                  <p class="entry__when">July 2025 – July 2026 · Navi Mumbai, India</p>
+                </div>
+                <ul class="bullets entry__points">
+                  <li>
+                    Led photography and media operations for major college events including
+                    <strong>Horizon</strong>, <strong>Technovate (TechFest)</strong>,
+                    <strong>DY T20</strong>, ICC-related cricket events, cultural festivals,
+                    workshops and inter-college competitions.
+                  </li>
+                  <li>
+                    Directed cross-functional photography and videography teams for
+                    <strong>WPL</strong>, <strong>ICC World Cup events</strong>, the
+                    <strong>D.Y. Patil T20 Cup</strong> (2024–2026), and concerts featuring
+                    A.R. Rahman, Darshan Raval, Coldplay and 50 Cent.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -552,8 +920,8 @@
             <p class="opener__num">VI</p>
             <h2 class="opener__title" id="certs-t">Certifications</h2>
             <p class="opener__lede">
-              <span class="drop">T</span>en certifications across cloud, generative AI and the
-              tools the work runs on.
+              <span class="drop">T</span>welve certifications across SAP, cloud, generative AI and
+              the tools the work runs on.
             </p>
           </div>
         </div>
@@ -562,12 +930,51 @@
           <div class="slab">
             <div class="slab__head" data-reveal>
               <h3>Credentials</h3>
-              <span class="slab__count">10</span>
+              <span class="slab__count">12</span>
             </div>
 
             <!-- Each name opens its own certificate. The image path lives on the
-                 button; nothing is fetched until someone actually clicks. -->
+                 button; nothing is fetched until someone actually clicks. The two
+                 newest have no scan in assets/certificates/ yet, so they are plain
+                 headings: add the scan, then wrap the name in a .cert__open button. -->
             <div class="certs" data-reveal-stagger>
+              <article class="cert" data-issuer="SAP">
+                <p class="cert__issuer">SAP</p>
+                <h4 class="cert__name">
+                  <button class="cert__open" type="button" data-cert="assets/certificates/sap-abap-cloud-back-end-developer.jpg">
+                    <span>SAP Certified Back-End Developer — ABAP Cloud</span>
+                  </button>
+                </h4>
+                <p class="cert__note">Developer</p>
+              </article>
+              <article class="cert" data-issuer="Microsoft">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">Microsoft Certified: Azure AI Cloud Developer Associate</h4>
+                <p class="cert__note">Associate · AI-200</p>
+              </article>
+              <article class="cert" data-issuer="Microsoft">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">Microsoft Certified: Azure AI Apps and Agents Developer Associate</h4>
+                <p class="cert__note">Associate · AI-103</p>
+              </article>
+              <article class="cert" data-issuer="Microsoft">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">
+                  <button class="cert__open" type="button" data-cert="assets/certificates/microsoft-azure-fundamentals.jpg">
+                    <span>Microsoft Certified: Azure Fundamentals</span>
+                  </button>
+                </h4>
+                <p class="cert__note">Fundamentals · AZ-900</p>
+              </article>
+              <article class="cert" data-issuer="Microsoft">
+                <p class="cert__issuer">Microsoft</p>
+                <h4 class="cert__name">
+                  <button class="cert__open" type="button" data-cert="assets/certificates/microsoft-excel-2019-associate.jpg">
+                    <span>Office Specialist: Excel Associate — Excel and Excel 2019</span>
+                  </button>
+                </h4>
+                <p class="cert__note">Associate</p>
+              </article>
               <article class="cert" data-issuer="Oracle">
                 <p class="cert__issuer">Oracle</p>
                 <h4 class="cert__name">
@@ -607,33 +1014,6 @@
               <article class="cert" data-issuer="Microsoft">
                 <p class="cert__issuer">Microsoft</p>
                 <h4 class="cert__name">
-                  <button class="cert__open" type="button" data-cert="assets/certificates/microsoft-azure-fundamentals.jpg">
-                    <span>Microsoft Certified: Azure Fundamentals</span>
-                  </button>
-                </h4>
-                <p class="cert__note">Fundamentals</p>
-              </article>
-              <article class="cert" data-issuer="SAP">
-                <p class="cert__issuer">SAP</p>
-                <h4 class="cert__name">
-                  <button class="cert__open" type="button" data-cert="assets/certificates/sap-abap-cloud-back-end-developer.jpg">
-                    <span>SAP Certified Back-End Developer — ABAP Cloud</span>
-                  </button>
-                </h4>
-                <p class="cert__note">Developer</p>
-              </article>
-              <article class="cert" data-issuer="Microsoft">
-                <p class="cert__issuer">Microsoft</p>
-                <h4 class="cert__name">
-                  <button class="cert__open" type="button" data-cert="assets/certificates/microsoft-excel-2019-associate.jpg">
-                    <span>Office Specialist: Excel Associate — Excel and Excel 2019</span>
-                  </button>
-                </h4>
-                <p class="cert__note">Associate</p>
-              </article>
-              <article class="cert" data-issuer="Microsoft">
-                <p class="cert__issuer">Microsoft</p>
-                <h4 class="cert__name">
                   <button class="cert__open" type="button" data-cert="assets/certificates/microsoft-excel-2019-score-report.jpg">
                     <span>Office Specialist: Excel Associate</span>
                   </button>
@@ -663,61 +1043,32 @@
         </div>
       </section>
 
-      <!-- =================================================== VII. beyond work -->
-      <section class="band band--bone" id="beyond" data-band="light" aria-labelledby="beyond-t">
-        <div class="opener">
-          <svg class="opener__grid" aria-hidden="true"><use href="#fig-opener" /></svg>
-          <div class="opener__inner">
-            <p class="opener__num">VII</p>
-            <h2 class="opener__title" id="beyond-t">Beyond work</h2>
-            <p class="opener__lede">
-              <span class="drop">F</span>our grades of tabla and a state-level badminton finish.
-            </p>
-          </div>
-        </div>
-
-        <div class="wrap shift">
-          <div class="slab">
-            <div class="slab__head" data-reveal>
-              <h3>Extracurricular</h3>
-              <span class="slab__count">02</span>
-            </div>
-
-            <div data-reveal-stagger>
-              <article class="entry">
-                <div>
-                  <h4 class="entry__org">Akhil Bharatiya Gandharva Mahavidyalaya</h4>
-                  <p class="entry__role">Tabla examinations</p>
-                  <p class="entry__when">2016 – 2019 · India</p>
-                </div>
-                <ul class="bullets entry__points">
-                  <li>Cleared <strong>4 national-level examinations</strong> across successive grades.</li>
-                </ul>
-              </article>
-
-              <article class="entry">
-                <div>
-                  <h4 class="entry__org">Yonex-Sunrise Maharashtra State Masters</h4>
-                  <p class="entry__role">Badminton Championship</p>
-                  <p class="entry__when">2021 · Mumbai, India</p>
-                </div>
-                <ul class="bullets entry__points">
-                  <li><strong>5th place</strong> finish at state level.</li>
-                </ul>
-              </article>
-            </div>
-          </div>
-        </div>
+      <!-- ================================================== the other half -->
+      <section class="band band--bone door" data-band="light" aria-labelledby="door-t">
+        <a class="door__link" href="hobbies.html" data-iris data-cursor="Enter">
+          <svg class="door__iris" viewBox="-300 -300 600 600" data-iris-figure aria-hidden="true">
+            <circle r="286" /><circle r="298" />
+          </svg>
+          <p class="opener__num" data-reveal>Intermission</p>
+          <h2 class="door__title" id="door-t" data-reveal>Off the cl<span class="script">o</span>ck</h2>
+          <p class="door__lede" data-reveal>
+            Photography, tabla and badminton. The other half has a page of its own.
+          </p>
+          <span class="door__go" data-reveal>
+            Step through
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8M6.4 2.4 10 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+          </span>
+        </a>
       </section>
 
-      <!-- ==================================================== VIII. contact -->
+      <!-- ===================================================== VII. contact -->
       <footer class="band footer" id="contact" data-band="dark" aria-labelledby="contact-t">
         <svg class="footer__art" aria-hidden="true"><use href="#fig-opener" /></svg>
 
         <div class="wrap shift footer__body">
           <div class="footer__lead">
             <div>
-              <p class="opener__num" data-reveal>VIII</p>
+              <p class="opener__num" data-reveal>VII</p>
               <h2 class="footer__title" id="contact-t" data-reveal>
                 Let’s build<br />som<span class="script">e</span>thing.
               </h2>
@@ -754,7 +1105,7 @@
                   <path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" />
                 </svg>
               </a>
-              <a class="flink" href="https://www.linkedin.com/in/parth-thorat" target="_blank" rel="noopener">
+              <a class="flink" href="https://linkedin.com/in/parth-thorat" target="_blank" rel="noopener">
                 <span>LinkedIn</span>
                 <span class="flink__hint">Parth Thorat</span>
                 <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true">
@@ -777,6 +1128,15 @@
                 <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true">
                   <path d="M6 2v8M2.4 6.4 6 10l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.3" />
                 </svg>
+              </a>
+            </div>
+
+            <div class="fcol">
+              <p class="footer__k">Off the clock</p>
+              <a class="flink" href="hobbies.html" data-iris>
+                <span>Photography</span>
+                <span class="flink__hint">tabla, badminton</span>
+                <svg class="flink__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4.2 3H9v4.8" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
               </a>
             </div>
 
@@ -832,5 +1192,6 @@
     </dialog>
 
     <script src="assets/js/portfolio.js" defer></script>
+    <script src="assets/js/work.js" defer></script>
   </body>
 </html>

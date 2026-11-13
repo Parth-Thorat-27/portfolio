@@ -78,11 +78,13 @@ closedBox.display === 'none' && closedBox.area === 0
 const counts = await page.evaluate(() => ({
   cards: document.querySelectorAll('.cert').length,
   buttons: document.querySelectorAll('.cert__open').length,
+  // Cards whose scan has not been added yet are plain headings, by design.
+  plain: document.querySelectorAll('.cert:not(:has(.cert__open))').length,
   label: document.querySelector('#certifications .slab__count')?.textContent.trim(),
 }));
-counts.cards === counts.buttons
-  ? ok('every certification card has an open button', `${counts.cards}`)
-  : bad('every certification card has an open button', JSON.stringify(counts));
+counts.cards === counts.buttons + counts.plain && counts.buttons > 0
+  ? ok('every card with a scan has an open button', `${counts.buttons} of ${counts.cards}`)
+  : bad('every card with a scan has an open button', JSON.stringify(counts));
 Number(counts.label) === counts.cards
   ? ok('the stated count matches the cards', counts.label)
   : bad('the stated count matches the cards', `label ${counts.label} vs ${counts.cards} cards`);

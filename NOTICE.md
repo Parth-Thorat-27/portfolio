@@ -11,9 +11,14 @@ Written for this project, and covered by [LICENSE](LICENSE):
 
 ```
 index.html
+hobbies.html
 assets/css/portfolio.css
+assets/css/sections.css
 assets/css/fonts.css
 assets/js/portfolio.js
+assets/js/work.js
+assets/js/hobbies.js
+assets/photos/
 assets/js/site.js
 assets/favicon.svg
 tools/*.mjs
@@ -46,7 +51,7 @@ are commercial and **no licence has been purchased for the use in this repositor
 | --- | --- | --- |
 | Neue Montreal | `NeueMontreal-Bold.woff2/.ttf` | Commercial. Pangram Pangram Foundry. A web licence must be bought for any public deployment. |
 | HW Cigars | `HWCigars-Regular.woff2/.ttf` | Commercial. I have not confirmed the foundry — verify before relying on it anywhere. |
-| Imperial Script | `ImperialScript-Regular.woff2/.ttf` | Free. Google Fonts, SIL Open Font License 1.1. |
+| Imperial Script | `ImperialScript-Latin.woff2` (full Latin set, from Google Fonts), `ImperialScript-Regular.woff2/.ttf` (capitals-only subset) | Free. Google Fonts, SIL Open Font License 1.1. |
 | Inter | `Inter-Variable.woff2` | Free. SIL Open Font License 1.1. Used only by the reference mirror. |
 
 If this repository is ever deployed to a public URL, the first two need either a purchased

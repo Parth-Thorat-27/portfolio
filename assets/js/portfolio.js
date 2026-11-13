@@ -14,7 +14,16 @@
 
 (() => {
   const clamp = (v, min, max) => (v < min ? min : v > max ? max : v);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const root = document.documentElement;
+
+  /** Page scripts (work.js, hobbies.js) hang their per-frame work off this. */
+  const frameHooks = [];
+  let velocity = 0; // smoothed px/frame, signed — the marquees lean on it
 
   const topbar = document.querySelector('[data-topbar]');
   const rail = document.querySelector('[data-rail]');
@@ -129,8 +138,18 @@
   // ================================================================= parallax
 
   const hero = document.querySelector('.hero');
-  const heroFrame = document.querySelector('.hero__frame');
-  const heroGrid = document.querySelector('.hero__grid');
+  const heroPin = document.querySelector('.hero__pin');
+  const heroPaper = document.querySelector('.hero__paper');
+  const heroFrame = document.querySelector('.hero__dark .hero__frame');
+  const heroTitle = document.querySelector('.hero__dark .hero__title');
+  const heroInk = document.querySelector('.hero__paper .hero__title');
+  const heroHud = document.querySelector('.hero__hud');
+  const heroSay = document.querySelector('.hero__say');
+  const heroPinned = Boolean(heroPin && heroPaper && heroFrame && heroTitle && heroInk) && !reduceMotion;
+  if (heroPinned) hero.classList.add('is-pinned');
+
+  /** Where the frame sits in the pinned viewport, and how far the name grows. */
+  const heroBox = {w: 1, h: 1, l: 0, t: 0, r: 0, b: 0, scale: 1, travel: 1};
 
   /** One entry per opener: the pinned artwork and the pinned title block. */
   const openers = [...document.querySelectorAll('.opener')].map((host) => ({
@@ -145,6 +164,22 @@
 
   function measure() {
     heroHeight = hero ? hero.offsetHeight : window.innerHeight;
+    if (heroPinned) {
+      const w = heroPin.clientWidth;
+      const h = heroPin.clientHeight;
+      const fw = heroFrame.offsetWidth;
+      const fh = heroFrame.offsetHeight;
+      heroBox.w = w;
+      heroBox.h = h;
+      heroBox.l = heroBox.r = (w - fw) / 2;
+      heroBox.t = heroBox.b = (h - fh) / 2;
+      heroBox.travel = Math.max(1, heroHeight - h);
+      // The name ends as large as the screen allows: bounded by width on a
+      // phone, by height on a short laptop.
+      const tw = Math.max(1, heroTitle.offsetWidth);
+      const th = Math.max(1, heroTitle.offsetHeight);
+      heroBox.scale = Math.max(1, Math.min(((w < 700 ? 0.8 : 0.6) * w) / tw, (0.56 * h) / th));
+    }
     for (const o of openers) {
       o.top = o.host.getBoundingClientRect().top + window.scrollY;
       o.height = Math.max(1, o.host.offsetHeight);
@@ -154,14 +189,25 @@
   function renderParallax(y) {
     if (reduceMotion) return;
 
-    if (hero && heroFrame && heroGrid) {
-      const p = clamp(y / heroHeight, 0, 1);
-      // The title lifts and dissolves; the construction lines push past it, so
-      // the two planes separate as the hero leaves.
-      heroFrame.style.transform = `translate3d(0, ${(-p * 140).toFixed(2)}px, 0)`;
-      heroFrame.style.opacity = clamp(1 - p * 1.6, 0, 1).toFixed(3);
-      // Opacity here belongs to the entrance animation — transform only.
-      heroGrid.style.transform = `scale(${(1 + p * 0.28).toFixed(4)})`;
+    if (heroPinned) {
+      const p = clamp(y / heroBox.travel, 0, 1);
+      // Two beats. First the frame fills with paper from its bottom edge, like
+      // a tray filling; then the filled frame opens until it is the screen.
+      const fill = easeOut(clamp((p - 0.02) / 0.18, 0, 1));
+      const open = easeInOut(clamp((p - 0.18) / 0.62, 0, 1));
+      const keep = 1 - open;
+      const top = lerp(heroBox.h - heroBox.b, heroBox.t, fill) * keep;
+      heroPaper.style.clipPath = `inset(${top.toFixed(1)}px ${(heroBox.r * keep).toFixed(1)}px ${(
+        heroBox.b * keep
+      ).toFixed(1)}px ${(heroBox.l * keep).toFixed(1)}px)`;
+      heroInk.style.setProperty('--s', lerp(1, heroBox.scale, open).toFixed(4));
+      heroPin.style.setProperty('--gs', (1 + p * 0.22).toFixed(4));
+      if (heroHud) heroHud.style.opacity = clamp(1 - p / 0.1, 0, 1).toFixed(3);
+      if (heroSay) heroSay.style.opacity = clamp((p - 0.74) / 0.12, 0, 1).toFixed(3);
+      // The top bar asks its band what colour to be; tell it the truth once
+      // the paper has reached it.
+      const band = fill > 0 && top < 30 ? 'light' : 'dark';
+      if (hero.dataset.band !== band) hero.dataset.band = band;
     }
 
     for (const o of openers) {
@@ -441,6 +487,365 @@
     });
   })();
 
+  // ==================================================================== iris
+
+  /**
+   * A camera iris as two SVG paths: the regular polygon the blades leave open,
+   * and one straight edge per blade running on past its corner — which is what
+   * makes it read as a diaphragm rather than as a polygon. Shared by the page
+   * transition and by the figure on the door to the other half.
+   */
+  function irisPaths(cx, cy, r, rot, n, reach) {
+    const step = (Math.PI * 2) / n;
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = rot + i * step;
+      pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+    }
+    const f = (v) => v.toFixed(1);
+    const hole = `M${pts.map((p) => `${f(p[0])} ${f(p[1])}`).join('L')}Z`;
+    let blades = '';
+    for (let i = 0; i < n; i++) {
+      const a = pts[i];
+      const b = pts[(i + 1) % n];
+      // The direction of a regular polygon's edge, taken from the angle rather
+      // than from the two points, so it survives the radius reaching zero.
+      const dir = rot + i * step + Math.PI / 2 + step / 2;
+      blades += `M${f(a[0])} ${f(a[1])}L${f(b[0] + Math.cos(dir) * reach)} ${f(b[1] + Math.sin(dir) * reach)}`;
+    }
+    return {hole, blades};
+  }
+
+  /**
+   * The transition between the two pages. Closes over the page being left,
+   * then the next page — which was painted already covered — opens it again.
+   */
+  (() => {
+    if (reduceMotion) {
+      root.classList.remove('iris-pending');
+      return;
+    }
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const BLADES = 8;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'iris');
+    svg.setAttribute('aria-hidden', 'true');
+    const fill = document.createElementNS(NS, 'path');
+    fill.setAttribute('class', 'iris__fill');
+    const lines = document.createElementNS(NS, 'path');
+    lines.setAttribute('class', 'iris__lines');
+    svg.append(fill, lines);
+    document.body.appendChild(svg);
+
+    let raf = null;
+
+    /** 0 is shut, 1 is clear of every corner of the screen. */
+    function draw(open) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const full = Math.hypot(w, h) / 2 / Math.cos(Math.PI / BLADES) + 4;
+      const r = full * open;
+      // The blades turn as they close, the way a real diaphragm does.
+      const {hole, blades} = irisPaths(w / 2, h / 2, r, -0.35 - (1 - open) * 1.5, BLADES, Math.hypot(w, h));
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      fill.setAttribute('d', `M0 0H${w}V${h}H0Z${hole}`);
+      lines.setAttribute('d', blades);
+    }
+
+    function run(from, to, duration, ease, done) {
+      cancelAnimationFrame(raf);
+      svg.dataset.on = '';
+      const start = performance.now();
+      const tick = (now) => {
+        const t = clamp((now - start) / duration, 0, 1);
+        draw(lerp(from, to, ease(t)));
+        if (t < 1) {
+          raf = requestAnimationFrame(tick);
+          return;
+        }
+        if (to >= 1) delete svg.dataset.on;
+        done?.();
+      };
+      draw(from);
+      raf = requestAnimationFrame(tick);
+    }
+
+    const open = () => run(0, 1, 1150, easeInOut);
+    const close = (done) => run(1, 0, 720, easeInOut, done);
+
+    // The page arrives covered by a plain black sheet from the stylesheet;
+    // swap that for the real iris, shut, and open it.
+    if (root.classList.contains('iris-pending')) {
+      draw(0);
+      svg.dataset.on = '';
+      root.classList.remove('iris-pending');
+      requestAnimationFrame(open);
+    }
+
+    // Coming back with the back button restores the page exactly as it was
+    // left — which is shut.
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) open();
+    });
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest?.('a[data-iris]');
+      if (!link || event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      close(() => {
+        window.location.href = link.href;
+      });
+    });
+  })();
+
+  /** The iris on the door: the same construction, opened by scrolling to it. */
+  (() => {
+    const figures = [...document.querySelectorAll('[data-iris-figure]')];
+    if (!figures.length) return;
+
+    const items = figures.map((svg, index) => {
+      const id = `iris-clip-${index}`;
+      svg.innerHTML =
+        `<clipPath id="${id}"><circle r="286" /></clipPath>` +
+        '<circle r="286" /><circle r="298" />' +
+        `<path clip-path="url(#${id})" /><path />`;
+      const paths = svg.querySelectorAll('path');
+      return {svg, blades: paths[0], hole: paths[1]};
+    });
+
+    function draw(item, p) {
+      const open = 0.16 + 0.62 * easeInOut(clamp(p * 1.5, 0, 1));
+      const {hole, blades} = irisPaths(0, 0, 286 * open, p * 1.3, 9, 620);
+      item.blades.setAttribute('d', blades);
+      item.hole.setAttribute('d', hole);
+    }
+
+    if (reduceMotion) {
+      for (const item of items) draw(item, 0.5);
+      return;
+    }
+
+    frameHooks.push((y, vh) => {
+      for (const item of items) {
+        const r = item.svg.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) continue;
+        draw(item, clamp((vh - r.top) / (vh + r.height), 0, 1));
+      }
+    });
+  })();
+
+  // ================================================================== cursor
+
+  /** A ring that trails the pointer and swells over anything that can be pressed. */
+  (() => {
+    if (reduceMotion || !finePointer) return;
+
+    const ring = document.createElement('div');
+    ring.className = 'cursor';
+    ring.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span');
+    label.className = 'cursor__label';
+    ring.appendChild(label);
+    document.body.appendChild(ring);
+
+    const pos = {x: 0, y: 0, tx: 0, ty: 0};
+    let raf = null;
+    let placed = false;
+
+    function tick() {
+      pos.x = lerp(pos.x, pos.tx, 0.22);
+      pos.y = lerp(pos.y, pos.ty, 0.22);
+      ring.style.transform = `translate3d(${pos.x.toFixed(1)}px, ${pos.y.toFixed(1)}px, 0)`;
+      raf = Math.abs(pos.tx - pos.x) + Math.abs(pos.ty - pos.y) > 0.2 ? requestAnimationFrame(tick) : null;
+    }
+
+    window.addEventListener(
+      'pointermove',
+      (event) => {
+        if (event.pointerType && event.pointerType !== 'mouse') return;
+        pos.tx = event.clientX;
+        pos.ty = event.clientY;
+        if (!placed) {
+          placed = true;
+          pos.x = pos.tx;
+          pos.y = pos.ty;
+          ring.dataset.on = '';
+        }
+
+        const target = event.target.closest ? event.target : null;
+        const named = target?.closest('[data-cursor]');
+        if (named) {
+          label.textContent = named.dataset.cursor;
+          ring.dataset.state = 'label';
+        } else if (target?.closest('a, button, summary, input, [role="button"], .cert')) {
+          ring.dataset.state = 'link';
+        } else {
+          delete ring.dataset.state;
+        }
+
+        if (raf === null) raf = requestAnimationFrame(tick);
+      },
+      {passive: true},
+    );
+
+    document.addEventListener('pointerleave', () => delete ring.dataset.on);
+    document.addEventListener('pointerenter', () => {
+      if (placed) ring.dataset.on = '';
+    });
+  })();
+
+  /** The hero's construction lines lean a few pixels away from the pointer. */
+  (() => {
+    if (!heroPinned || !finePointer) return;
+    const at = {x: 0, y: 0, tx: 0, ty: 0};
+    let raf = null;
+
+    function tick() {
+      at.x = lerp(at.x, at.tx, 0.07);
+      at.y = lerp(at.y, at.ty, 0.07);
+      heroPin.style.setProperty('--gx', `${at.x.toFixed(2)}px`);
+      heroPin.style.setProperty('--gy', `${at.y.toFixed(2)}px`);
+      raf = Math.abs(at.tx - at.x) + Math.abs(at.ty - at.y) > 0.05 ? requestAnimationFrame(tick) : null;
+    }
+
+    hero.addEventListener(
+      'pointermove',
+      (event) => {
+        at.tx = (event.clientX / window.innerWidth - 0.5) * -28;
+        at.ty = (event.clientY / window.innerHeight - 0.5) * -20;
+        if (raf === null) raf = requestAnimationFrame(tick);
+      },
+      {passive: true},
+    );
+  })();
+
+  // =============================================================== statement
+
+  /**
+   * Scroll-read paragraphs: every word starts as a ghost and inks in as the
+   * paragraph crosses the screen. Text nodes are split in place, so inline
+   * elements inside the paragraph survive.
+   */
+  (() => {
+    if (reduceMotion) return;
+    const blocks = [...document.querySelectorAll('[data-scrub]')].map((el) => {
+      const words = [];
+      for (const node of [...el.childNodes]) {
+        if (node.nodeType !== Node.TEXT_NODE) {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            node.classList.add('w');
+            words.push(node);
+          }
+          continue;
+        }
+        const frag = document.createDocumentFragment();
+        for (const part of node.nodeValue.split(/(\s+)/)) {
+          if (!part) continue;
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(' '));
+            continue;
+          }
+          const span = document.createElement('span');
+          span.className = 'w';
+          span.textContent = part;
+          words.push(span);
+          frag.appendChild(span);
+        }
+        el.replaceChild(frag, node);
+      }
+      return {el, words, lit: 0};
+    });
+    if (!blocks.length) return;
+
+    frameHooks.push((y, vh) => {
+      for (const block of blocks) {
+        const r = block.el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) continue;
+        // Starts as the first line clears the bottom fifth of the screen and
+        // is done while the last line is still comfortably in view.
+        const p = clamp((vh * 0.82 - r.top) / (r.height + vh * 0.3), 0, 1);
+        const lit = Math.round(p * block.words.length);
+        if (lit === block.lit) continue;
+        const from = Math.min(lit, block.lit);
+        const to = Math.max(lit, block.lit);
+        for (let i = from; i < to; i++) block.words[i].classList.toggle('is-lit', i < lit);
+        block.lit = lit;
+      }
+    });
+  })();
+
+  // ================================================================= marquee
+
+  /**
+   * Rows of names that drift on their own and lean into the scroll: faster
+   * when the page moves, and in the direction it is moving.
+   */
+  (() => {
+    const rows = [...document.querySelectorAll('[data-marquee]')];
+    if (!rows.length || reduceMotion) return;
+
+    const items = rows.map((row) => {
+      const sign = row.dataset.marquee === 'reverse' ? -1 : 1;
+      const originals = [...row.children];
+      const item = {row, sign, set: 1, x: 0, originals};
+      return item;
+    });
+
+    function build(item) {
+      for (const clone of item.row.querySelectorAll('[data-clone]')) clone.remove();
+      item.set = Math.max(1, item.row.scrollWidth);
+      const need = Math.ceil((item.row.parentElement.clientWidth + item.set) / item.set);
+      for (let i = 1; i < need + 1; i++) {
+        for (const node of item.originals) {
+          const clone = node.cloneNode(true);
+          clone.dataset.clone = '';
+          clone.setAttribute('aria-hidden', 'true');
+          item.row.appendChild(clone);
+        }
+      }
+    }
+
+    let visible = false;
+    let raf = null;
+    let lean = 1;
+
+    function tick() {
+      raf = null;
+      if (!visible) return;
+      const v = velocity;
+      if (Math.abs(v) > 0.5) lean = v > 0 ? 1 : -1;
+      const speed = (0.55 + Math.min(Math.abs(v), 60) * 0.32) * lean;
+      for (const item of items) {
+        item.x = (((item.x + speed * item.sign) % item.set) + item.set) % item.set;
+        item.row.style.transform = `translate3d(${(-item.x).toFixed(2)}px, 0, 0)`;
+      }
+      // Velocity is only refreshed by the scroll loop; let it die away here so
+      // the rows settle back to their idle drift once the page stops.
+      velocity *= 0.92;
+      raf = requestAnimationFrame(tick);
+    }
+
+    const start = () => {
+      for (const item of items) build(item);
+    };
+    start();
+    document.fonts?.ready.then(start);
+    window.addEventListener('resize', () => setTimeout(start, 160), {passive: true});
+
+    const onScreen = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) onScreen.add(entry.target);
+        else onScreen.delete(entry.target);
+      }
+      visible = onScreen.size > 0;
+      if (visible && raf === null) raf = requestAnimationFrame(tick);
+    });
+    for (const host of new Set(items.map((i) => i.row.parentElement))) observer.observe(host);
+  })();
+
   // ==================================================== chrome and rail state
 
   const sections = [...document.querySelectorAll('main section[id], main footer[id]')].filter(
@@ -493,7 +898,7 @@
 
     if (topbar) topbar.dataset.scrolled = window.scrollY > 24 ? 'true' : 'false';
 
-    const pastHero = window.scrollY > window.innerHeight * 0.7;
+    const pastHero = window.scrollY > heroHeight - window.innerHeight * 0.45;
     const atEnd =
       window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
     const show = pastHero && !atEnd ? 'true' : 'false';
@@ -544,11 +949,18 @@
     if (rafId === null) rafId = requestAnimationFrame(frame);
   }
 
+  let lastY = window.scrollY;
+
   function frame() {
     rafId = null;
     const moving = scroller ? scroller.step() : false;
-    renderParallax(window.scrollY);
+    const y = window.scrollY;
+    velocity = lerp(velocity, y - lastY, 0.3);
+    lastY = y;
+    renderParallax(y);
     updateChrome();
+    const vh = window.innerHeight;
+    for (const hook of frameHooks) hook(y, vh);
     if (moving) requestTick();
   }
 
@@ -576,6 +988,24 @@
 
   measure();
   requestTick();
+
+  window.PF = {
+    clamp,
+    lerp,
+    easeInOut,
+    easeOut,
+    reduceMotion,
+    finePointer,
+    /** Run fn(scrollY, viewportHeight) on every frame the page moves. */
+    onFrame(fn) {
+      frameHooks.push(fn);
+      requestTick();
+    },
+    requestTick,
+    scrollTo: (y) => (scroller ? scroller.scrollTo(y) : window.scrollTo(0, y)),
+    velocity: () => velocity,
+    irisPaths,
+  };
 
   // Sticky heights depend on the display face, which lands after first paint.
   if (document.fonts?.ready) {

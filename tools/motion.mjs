@@ -99,20 +99,39 @@ check(
   `${parallax.near || '(none)'} -> ${parallax.far || '(none)'}`,
 );
 
-// 4. Hero fades and lifts as it leaves.
+// 4. The hero is pinned, and its frame opens into the paper as the page scrolls.
 const heroMotion = await page.evaluate(async () => {
-  const frame = document.querySelector('.hero__frame');
-  const at = async (y) => {
-    window.scrollTo(0, y);
+  const hero = document.querySelector('.hero');
+  const pin = hero.querySelector('.hero__pin');
+  const paper = hero.querySelector('.hero__paper');
+  const ink = paper.querySelector('.hero__title');
+  const travel = hero.offsetHeight - window.innerHeight;
+  const at = async (frac) => {
+    window.scrollTo(0, travel * frac);
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    return {t: frame.style.transform, o: frame.style.opacity};
+    return {
+      top: Math.round(pin.getBoundingClientRect().top),
+      clip: paper.style.clipPath,
+      scale: Number(ink.style.getPropertyValue('--s')),
+      band: hero.dataset.band,
+    };
   };
-  return {top: await at(0), mid: await at(400)};
+  return {start: await at(0), mid: await at(0.5), end: await at(0.95), travel};
 });
 check(
-  'hero lifts and fades on scroll',
-  heroMotion.mid.t !== heroMotion.top.t && Number(heroMotion.mid.o) < 1,
-  `opacity ${heroMotion.top.o || '1'} -> ${heroMotion.mid.o}`,
+  'hero stays pinned while its frame opens',
+  heroMotion.travel > 600 && heroMotion.mid.top === 0 && heroMotion.end.top === 0,
+  `pin at ${heroMotion.mid.top}px and ${heroMotion.end.top}px over ${Math.round(heroMotion.travel)}px of scroll`,
+);
+check(
+  'hero frame opens to the full screen',
+  heroMotion.start.clip !== heroMotion.mid.clip && heroMotion.end.clip.replace(/[^0-9.]+/g, ' ').trim().split(' ').every((n) => Number(n) === 0),
+  `${heroMotion.start.clip} -> ${heroMotion.end.clip}`,
+);
+check(
+  'hero name grows and the band turns light',
+  heroMotion.end.scale > heroMotion.start.scale && heroMotion.start.band === 'dark' && heroMotion.end.band === 'light',
+  `scale ${heroMotion.start.scale} -> ${heroMotion.end.scale}, band ${heroMotion.start.band} -> ${heroMotion.end.band}`,
 );
 
 // 5. The rail leader fills with progress through the section.

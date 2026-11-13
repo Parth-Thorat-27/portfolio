@@ -1,9 +1,17 @@
 # Parth Ramesh Thorat — portfolio
 
-A one-page portfolio built in the design language of
+A two-page portfolio built in the design language of
 [Shopify Editions Winter '26](https://www.shopify.com/editions/winter2026): the same three
 typefaces, the same four colours, the same very tight leading, and the same alternation
-between a black stage and a bone/sage paper. All the content is from the résumé.
+between a black stage and a bone/sage paper.
+
+- **[index.html](index.html) — on the clock.** Who I am and what I build: profile, the
+  projects from GitHub, experience, skills, education, certifications, contact.
+- **[hobbies.html](hobbies.html) — off the clock.** Photography, tabla and badminton. It is
+  the negative of the first page: it opens on paper where that one opens on black.
+
+The two are joined by a camera iris that closes over the page being left and opens on the
+one arrived at.
 
 ## Run it
 
@@ -11,34 +19,88 @@ between a black stage and a bone/sage paper. All the content is from the résum�
 node tools/serve.mjs        # http://127.0.0.1:8123/
 ```
 
-Any static host works — the page is plain HTML, one stylesheet, one script, and local
-fonts. Nothing is fetched at runtime.
+Any static host works — the pages are plain HTML, two stylesheets, three scripts and local
+fonts. The only thing fetched at runtime is the repository list from the GitHub API, and
+the page is complete without it.
 
 ## Layout
 
 ```
-index.html                 the portfolio
-assets/css/portfolio.css   design system + every component
+index.html                 the work page
+hobbies.html               the off-the-clock page
+assets/css/portfolio.css   design system: tokens, bands, openers, slabs, cards
+assets/css/sections.css    everything that moves: iris, hero, plates, orbit, viewfinder, gallery
 assets/css/fonts.css       the three @font-face rules
-assets/js/portfolio.js     momentum scroll, parallax, reveals, counters, rail tracking
+assets/js/portfolio.js     shared: momentum scroll, parallax, reveals, iris, cursor, marquee
+assets/js/work.js          work page: stacking plates, skills orbit, GitHub sync
+assets/js/hobbies.js       off the clock: viewfinder, contact sheet, viewer, teentaal, rally
+assets/photos/             the photographs, and photos.js — the list the gallery is built from
 assets/fonts/              NeueMontreal, HWCigars, ImperialScript
-assets/favicon.svg
 reference/editions/        static mirror of the Shopify page, for comparison
-tools/                     mirror / serve / screenshot / compare scripts
+tools/                     serve / photos / screenshot / test scripts
 ```
+
+## Adding photographs
+
+```bash
+# 1. drop files into assets/photos/   (a subfolder becomes a series, e.g. assets/photos/cricket/)
+# 2. rebuild the list
+node tools/photos.mjs
+```
+
+`photos.mjs` writes [assets/photos/photos.js](assets/photos/photos.js): each file's pixel
+size (so the sheet can lay itself out before a single image has loaded), the camera
+settings from EXIF where a JPEG carries them, and a title from the file name. Names a camera
+or an app made up — `IMG_6748`, `WhatsApp Image 2025-12-21…`, `Untitled design (6)` — get a
+blank title rather than a silly one. Open `photos.js` and type in `title`, `place` and `alt`
+by hand; they are kept the next time the tool runs, and so is the order, which is the order
+on the page. Byte-identical duplicates are skipped and anything over 1.5 MB is reported —
+there are no thumbnails, so every visitor downloads the file you put there. About 2400px on
+the long edge is plenty.
+
+With an empty list the sheet shows nine unexposed frames instead of a hole. Two or more
+series turn into filter buttons above it.
 
 ## Sections
 
-| | | from the résumé |
+**Work**
+
+| | | |
 | --- | --- | --- |
-| I | Profile | summary, current status, six measured outcomes |
-| II | Projects | PocketCA, Banking AI Document Intelligence, Customer Churn, BI & Reservation |
-| III | Experience | Student Union Council (Media Head), Photo Circle RAIT (Chief Coordinator) |
-| IV | Skills | the six stack groups |
-| V | Education | RAIT / P.E. Society / D.A.V. |
-| VI | Certifications | all ten, grouped by issuer, each name opening its scan |
-| VII | Beyond work | tabla, badminton |
-| VIII | Contact | email as the primary call to action, résumé PDF, GitHub, LinkedIn |
+| — | Hero | the name in a golden rectangle, which opens into the profile |
+| I | Profile | a scroll-read statement, current status, six measured outcomes |
+| II | Projects | the résumé’s SAP Invoice Exception Manager, then one plate per public GitHub repository — each with its own drawn figure |
+| III | Experience | the MDIAS internship |
+| IV | Skills | Python & SQL at the centre of an orbit; the seven stack groups beside it |
+| V | Education | RAIT / P.E. Society / D.A.V.; then extracurriculars — the events covered as a marquee, Student Union Council (Media Head), Photo Circle RAIT (Chief Coordinator) |
+| VI | Certifications | all twelve; the ten with a scan open it |
+| — | Intermission | the door to the other page |
+| VII | Contact | email as the primary call to action, résumé PDF, GitHub, LinkedIn |
+
+**Off the clock**
+
+| | | |
+| --- | --- | --- |
+| — | Viewfinder | corner brackets, a focus point that follows the pointer, a readout that stops down |
+| I | Photography | assignments, then the contact sheet and its full-screen viewer |
+| II | Tabla | teentaal as a sixteen-beat wheel that can be played |
+| III | Badminton | a court to scale, with a rally that plays out as it scrolls |
+| IV | Contact | the same footer, pointing back at the work page |
+
+## The projects section
+
+Every plate is written into [index.html](index.html), from the repositories' own READMEs,
+so the page reads in full with no network. [work.js](assets/js/work.js) then asks the GitHub
+API once per session for the account's public repositories and does two things with the
+answer: refreshes each plate's "Updated" month, and lists under the plates any repository
+the markup has not heard of yet — so a new project shows up the day it is pushed, and gets
+a plate of its own when there is time to write one. The two repositories that *are* this
+site are left out. If the request fails, nothing changes.
+
+To give a new repository a plate, copy an `<article class="plate">`, set `data-repo` to the
+repository name, and draw a figure: a 400 × 400 SVG of hairlines, no fills. The classes
+`a-spin`, `a-scan`, `a-sweep`, `a-bar`, `a-blink`, `a-pulse` and `a-flow` animate whatever
+they are put on, and only while the plate is on screen.
 
 ## The contact section
 
@@ -109,17 +171,32 @@ a dark band while crossing a boundary.
 | | |
 | --- | --- |
 | Momentum scrolling | Wheel input moves a target offset; each frame the real position eases ~10% of the way toward it. Same idea as Lenis, about 40 lines, no dependency. |
+| Iris | Eight blades drawn as one SVG path with an even-odd hole. It closes in 0.7s over the page being left; the next page is painted already covered and opens it in 1.1s. Never blocks a click. |
+| Hero | Pinned for 1.4 screens. The golden frame fills with paper from its bottom edge, then opens until the paper is the whole screen and the name has grown to fill it — the profile is not scrolled to, it is what the frame becomes. Construction lines draw themselves on arrival and lean away from the pointer. |
+| Statement | Each word starts as a ghost and inks in as the paragraph crosses the screen. |
+| Plates | Sticky and stacking: each project slides up over the last, which shrinks and dims as it is covered. Falls back to a plain list on a small or short screen. |
+| Figures | One line drawing per project — a record that spins, a scan line, a waveform — running only while its plate is visible. |
+| Marquee | Two rows of event names that drift on their own and lean into the scroll: faster when the page moves, and in the direction it moves. |
+| Orbit | Skill labels ride three rings around Python & SQL and stay upright as the rings turn. |
 | Pinned openers | Each opener is 132svh with both its layers sticky, so the title holds for a beat before the section scrolls out from under it. |
-| Parallax | Opener titles lift and fade, the construction lines scale and rotate slightly, the hero separates into two planes as it leaves. |
+| Parallax | Opener titles lift and fade, the construction lines scale and rotate slightly. |
 | Masked titles | Display words are split at runtime and slide up from behind a clipping box, staggered 90ms apart. |
 | Rail progress | The dotted leader on the active section fills left to right as you move through it. |
 | Reveals | Body blocks fade up on enter, children staggered; slab rules draw in from the left; the impact figures count up once. |
+| Cursor | A ring that trails the real pointer, swells over anything pressable and names the big targets. The native cursor stays. |
+| Viewfinder | The off-the-clock title racks into focus on arrival and falls out of it as it scrolls away, while the readout stops down from f/1.8 to f/16. |
+| Contact sheet | Frames unmask upward as they enter; the columns drift against each other; the viewer opens through a circular wipe and pages with arrow keys or a swipe. |
+| Teentaal | The theka is synthesised with the Web Audio API — a falling sine for the bayan, a ringing partial stack and a noise tick for the dayan — and scheduled against the audio clock. Silent until asked. |
+| Rally | The shuttle follows a path across the court, drawn by scroll position. |
 
-All of it runs from one `requestAnimationFrame` loop that stops when the page is still, and
-writes only `transform` and `opacity`.
+Everything scroll-driven runs from one `requestAnimationFrame` loop that stops when the page
+is still; page scripts hang their own work off it through `window.PF.onFrame`. The few
+things that move on their own — marquee, orbit, cursor — each run a loop only while they are
+on screen.
 
-Under `prefers-reduced-motion: reduce` the scroll hijack, the parallax, the word splitting
-and every transition are skipped, and the openers collapse from pinned to ordinary blocks.
+Under `prefers-reduced-motion: reduce` the scroll hijack, the iris, the pinned hero, the
+stacking, the parallax, the word splitting and every transition are skipped; the openers
+collapse from pinned to ordinary blocks and the marquee wraps into plain lines.
 Touch devices keep native scrolling — it already has momentum.
 
 ## Checks
@@ -127,15 +204,21 @@ Touch devices keep native scrolling — it already has momentum.
 ```bash
 npm install --prefix tools      # puppeteer-core, drives your installed Chrome
 node tools/shots.mjs            # screenshots every section at 1440px and 390px
+node tools/shots.mjs http://127.0.0.1:8123/hobbies.html
 node tools/motion.mjs           # asserts the scroll behaviour, including reduced motion
 node tools/certs.mjs            # asserts the certificate viewer
+node tools/offclock.mjs         # asserts the gallery, the viewer, teentaal, the rally and the iris
 ```
 
 `shots.mjs` fails loudly on console errors, 4xx responses and horizontal overflow — last
-run: 8 sections, no problems, at both widths. `motion.mjs` checks that a wheel tick eases
+run: no problems on either page, at both widths. `motion.mjs` checks that a wheel tick eases
 over frames rather than jumping, that titles pin, that parallax transforms actually change
 with scroll, that the rail leader tracks progress, that the copy button and clock behave,
-and that reduced motion turns all of it off — last run 16/16. `certs.mjs` checks
+that the hero stays pinned while its frame opens to the full screen, and that reduced
+motion turns all of it off — last run 18/18. `offclock.mjs` checks that the contact sheet
+matches the manifest, that a photograph never runs under its caption, that the viewer
+pages and releases the scroll lock, that teentaal advances and stops, and that the switch
+closes the iris, lands on the other page and opens it again — last run 18/18. `certs.mjs` checks
 that no scan is fetched on load, that the count matches the cards, that every
 path resolves, that each name opens its own image, that the page cannot scroll
 behind the viewer, and that the button, the backdrop and Esc all close it and
@@ -152,15 +235,25 @@ on localhost or https.
 
 ## Before this goes public
 
-Two things need your attention:
+Things that need your attention:
 
-1. **The LinkedIn URL is a guess.** The résumé shows the display name, not the slug.
-   `https://www.linkedin.com/in/parth-thorat` is a placeholder — check it and correct
-   the `href` in the contact section of [index.html](index.html).
+1. **Two certifications have no scan.** Azure AI Cloud Developer Associate (AI-200) and
+   Azure AI Apps and Agents Developer Associate (AI-103) are on the résumé but not in
+   `assets/certificates/`, so their cards are plain headings. Add the scans and wrap each
+   name in a `.cert__open` button like its neighbours.
 2. **The fonts are licensed.** Neue Montreal (Pangram Pangram) and HW Cigars are
    commercial faces taken from Shopify's site; Imperial Script is a free Google font.
    For a public deploy, buy licences or swap the first two in
    [assets/css/fonts.css](assets/css/fonts.css) — nothing else references them by name.
+
+3. **The photographs have no titles yet.** Files with camera or app names get a blank
+   title. Fill in `title`, `place` and `alt` in
+   [assets/photos/photos.js](assets/photos/photos.js), and re-export anything the tool
+   reports as over 1.5 MB.
+4. **The script face is now the full Latin set.** The file lifted from Shopify held capitals
+   only, so every lowercase swash — the *e* in Ramesh — was silently falling back to
+   whatever each device calls `cursive`. `ImperialScript-Latin.woff2` is the complete face
+   from Google Fonts (OFL) and is loaded first.
 
 The résumé at `assets/resume/Parth_Thorat_Resume.pdf` is linked from the top bar and from
 the contact section. It carries the phone number, which the page itself no longer shows —

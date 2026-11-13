@@ -23,10 +23,13 @@
   font-feature-settings: 'liga' 1, 'dlig' 1, 'kern' 1, 'smcp' 1, 'c2sc' 1, 'case' 1;
 }
 
-/* Script — single swash letters only. */
+/* Script — single swash letters only. The -Latin file is the full Latin set
+   from Google Fonts (OFL); -Regular is the original subset, capitals only, and
+   stays as the fallback. */
 @font-face {
   font-family: ImperialScript;
   src:
+    url(../fonts/ImperialScript-Latin.woff2) format('woff2'),
     url(../fonts/ImperialScript-Regular.woff2) format('woff2'),
     url(../fonts/ImperialScript-Regular.ttf) format('truetype');
   font-style: normal;

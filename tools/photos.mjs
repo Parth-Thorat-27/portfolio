@@ -24,6 +24,8 @@ const DIR = path.join(ROOT, 'assets', 'photos');
 const MANIFEST = path.join(DIR, 'photos.js');
 const TYPES = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
 const HEAVY = 1.5 * 1024 * 1024;
+// Written by tools/thumbs.py: small copies for the sheet and the viewer.
+const DERIVED = new Set(['thumbs', 'web']);
 
 // ------------------------------------------------------------------ sizes
 
@@ -175,6 +177,7 @@ async function walk(dir, series = '') {
   const found = [];
   for (const entry of await fs.readdir(dir, {withFileTypes: true})) {
     const full = path.join(dir, entry.name);
+    if (entry.isDirectory() && dir === DIR && DERIVED.has(entry.name)) continue;
     if (entry.isDirectory()) found.push(...(await walk(full, series || sentence(words(entry.name)))));
     else if (TYPES.has(path.extname(entry.name).toLowerCase())) found.push({full, series});
   }
@@ -204,7 +207,10 @@ const HEADER = `/**
  * from the file name. Anything typed in by hand afterwards (title, place, alt)
  * is kept the next time it runs. Order here is the order on the page.
  *
- *   { src, w, h, title, place, series, alt, exif }
+ *   { src, w, h, title, place, series, alt, exif, thumb, view }
+ *
+ * thumb and view are the small copies tools/thumbs.py makes; run it before
+ * photos.mjs and the page serves those instead of the originals.
  */
 `;
 
@@ -244,6 +250,17 @@ for (const {full, series} of files) {
     alt: old.alt ?? '',
     exif: info.exif || old.exif || '',
   };
+  // Small copies, if tools/thumbs.py has made them. The original stays the
+  // source of truth; these are only what the page downloads.
+  const copy = path.relative(DIR, full).split(path.sep).join('/').replace(/\.[^.]+$/, '.webp');
+  for (const [field, folder] of [['thumb', 'thumbs'], ['view', 'web']]) {
+    try {
+      await fs.access(path.join(DIR, folder, copy));
+      entry[field] = `assets/photos/${folder}/${copy}`;
+    } catch {
+      // not made yet; the page falls back to the original
+    }
+  }
   fresh.set(src, entry);
 }
 
@@ -263,8 +280,12 @@ const dropped = before.filter((p) => !fresh.has(p.src)).length;
 console.log(`${ordered.length} photographs in the manifest (${added} new, ${dropped} removed).`);
 if (twins.length) console.log(`\nSkipped as duplicates:\n  ${twins.join('\n  ')}`);
 if (unread.length) console.log(`\nCould not read a size from:\n  ${unread.join('\n  ')}`);
+// A heavy original only matters if the page still has to serve it.
+const served = heavy.filter((src) => !fresh.get(src)?.view);
+heavy.length = 0;
+heavy.push(...served);
 if (heavy.length) {
   console.log(
-    `\nOver 1.5 MB — every visitor downloads these in full. Exporting at about 2400px on the long edge is plenty:\n  ${heavy.join('\n  ')}`,
+    `\nOver 1.5 MB — every visitor downloads these in full. Run  python tools/thumbs.py  first, or export at about 2400px on the long edge:\n  ${heavy.join('\n  ')}`,
   );
 }

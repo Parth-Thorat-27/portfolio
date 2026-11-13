@@ -283,14 +283,14 @@
 
       img.dataset.loading = '';
       img.alt = photo.alt || photo.title || 'Photograph';
-      img.src = photo.src;
+      img.src = photo.view || photo.src;
       title.textContent = photo.title || '';
       meta.textContent = [photo.place, photo.series, photo.exif].filter(Boolean).join(' · ');
       count.textContent = `${two(current + 1)} / ${two(shown.length)}`;
 
       // Have the next one ready before it is asked for.
       const ahead = shown[(current + 1) % shown.length];
-      if (ahead && ahead !== photo) new Image().src = ahead.src;
+      if (ahead && ahead !== photo) new Image().src = ahead.view || ahead.src;
     }
 
     img.addEventListener('load', () => delete img.dataset.loading);

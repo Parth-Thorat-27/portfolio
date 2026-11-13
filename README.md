@@ -25,7 +25,7 @@ the page is complete without it.
 
 ## After changing a stylesheet or script
 
-The pages link their CSS and JS with a version on the end (`sections.css?v=3`). GitHub
+The pages link their CSS and JS with a version on the end (`sections.css?v=4`). GitHub
 Pages lets browsers keep those files for ten minutes and browsers often keep them far
 longer, so a visitor can get the new HTML with the old stylesheet — the page then shows new
 sections with no styling at all. Bump the number in both HTML files whenever a CSS or JS
@@ -52,9 +52,15 @@ tools/                     serve / photos / screenshot / test scripts
 
 ```bash
 # 1. drop files into assets/photos/   (a subfolder becomes a series, e.g. assets/photos/cricket/)
-# 2. rebuild the list
+# 2. make the small copies the page serves (needs Pillow: pip install pillow)
+python tools/thumbs.py
+# 3. rebuild the list
 node tools/photos.mjs
 ```
+
+`thumbs.py` writes a 900px copy for the contact sheet and a 2400px copy for the viewer into
+`assets/photos/thumbs/` and `assets/photos/web/`, and never touches the original. With them
+the eleven photographs here cost a visitor about 1.5 MB instead of 19 MB.
 
 `photos.mjs` writes [assets/photos/photos.js](assets/photos/photos.js): each file's pixel
 size (so the sheet can lay itself out before a single image has loaded), the camera

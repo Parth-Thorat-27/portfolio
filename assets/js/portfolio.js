@@ -846,6 +846,232 @@
     for (const host of new Set(items.map((i) => i.row.parentElement))) observer.observe(host);
   })();
 
+  // ============================================================== wireframes
+
+  /**
+   * Three-dimensional wireframes without a canvas or a library: a model is a
+   * list of points and the edges between them; each frame the points are
+   * turned, projected with perspective and written into three SVG paths — the
+   * far side faint, the near side stronger, and a chosen few edges at full
+   * strength. They turn slowly on their own, faster with the scroll, and the
+   * ones that take a pointer can be dragged round.
+   */
+  (() => {
+    const hosts = [...document.querySelectorAll('[data-wire]')];
+    if (!hosts.length) return;
+    const NS = 'http://www.w3.org/2000/svg';
+
+    /** Twelve points: the corners of three golden rectangles at right angles. */
+    function icosahedron() {
+      const phi = (1 + Math.sqrt(5)) / 2;
+      const v = [];
+      for (const a of [-1, 1]) for (const b of [-phi, phi]) v.push([0, a, b]);
+      for (const a of [-1, 1]) for (const b of [-phi, phi]) v.push([a, b, 0]);
+      for (const a of [-phi, phi]) for (const b of [-1, 1]) v.push([a, 0, b]);
+      const e = [];
+      const strong = [];
+      for (let i = 0; i < 12; i++) {
+        for (let k = i + 1; k < 12; k++) {
+          const d = Math.hypot(v[i][0] - v[k][0], v[i][1] - v[k][1], v[i][2] - v[k][2]);
+          const sameRect = Math.floor(i / 4) === Math.floor(k / 4);
+          const differ = [0, 1, 2].filter((n) => v[i][n] !== v[k][n]).length;
+          // The rectangles' own sides are drawn at full strength.
+          if (sameRect && differ === 1) strong.push([i, k]);
+          else if (Math.abs(d - 2) < 0.01) e.push([i, k]);
+        }
+      }
+      return {v: v.map((q) => q.map((n) => n / 1.92)), e, strong, pitch: 0.42, spin: 0.16};
+    }
+
+    /** An airliner: fuselage rings, swept wings, two engines and a tail. Nose at -x. */
+    function airliner() {
+      const v = [];
+      const e = [];
+      const strong = [];
+      const SIDES = 8;
+
+      const ring = (x, r, cy = 0, cz = 0) => {
+        const start = v.length;
+        for (let i = 0; i < SIDES; i++) {
+          const a = (i / SIDES) * Math.PI * 2;
+          v.push([x, cy + Math.cos(a) * r, cz + Math.sin(a) * r]);
+        }
+        for (let i = 0; i < SIDES; i++) e.push([start + i, start + ((i + 1) % SIDES)]);
+        return start;
+      };
+      const tube = (stations, cy = 0, cz = 0) => {
+        let last = null;
+        for (const [x, r] of stations) {
+          const start = ring(x, r, cy, cz);
+          if (last !== null) for (let i = 0; i < SIDES; i += 2) e.push([last + i, start + i]);
+          last = start;
+        }
+      };
+      const outline = (points, into = strong) => {
+        const start = v.length;
+        v.push(...points);
+        for (let i = 0; i < points.length; i++) into.push([start + i, start + ((i + 1) % points.length)]);
+      };
+
+      tube([[-1.18, 0.012], [-1.08, 0.07], [-0.92, 0.105], [-0.5, 0.115], [0.45, 0.115], [0.85, 0.075], [1.14, 0.022]]);
+
+      for (const side of [-1, 1]) {
+        // wing, then the tailplane
+        outline([[-0.2, side * 0.11, -0.04], [0.3, side * 1.02, 0.03], [0.42, side * 1.02, 0.03], [0.22, side * 0.11, -0.04]]);
+        outline([[0.82, side * 0.06, 0.03], [1.02, side * 0.4, 0.05], [1.1, side * 0.4, 0.05], [1.04, side * 0.06, 0.03]]);
+        // a rib or two, so the wing reads as a surface
+        const rib = v.length;
+        v.push([-0.02, side * 0.44, -0.015], [0.3, side * 0.44, -0.015], [0.14, side * 0.74, 0.01], [0.36, side * 0.74, 0.01]);
+        e.push([rib, rib + 1], [rib + 2, rib + 3]);
+        tube([[-0.2, 0.052], [-0.02, 0.058], [0.1, 0.04]], side * 0.4, -0.115);
+      }
+      outline([[0.66, 0, 0.1], [0.98, 0, 0.43], [1.1, 0, 0.43], [1.08, 0, 0.06]]);
+
+      return {v, e, strong, pitch: 0.3, spin: 0.22, bank: true};
+    }
+
+    const MODELS = {icosa: icosahedron, plane: airliner};
+
+    const items = hosts
+      .map((svg) => {
+        const model = MODELS[svg.dataset.wire]?.();
+        if (!model) return null;
+        const paths = ['wire__back', 'wire__front', 'wire__strong'].map((name) => {
+          const path = document.createElementNS(NS, 'path');
+          path.setAttribute('class', name);
+          svg.appendChild(path);
+          return path;
+        });
+        return {svg, model, paths, yaw: 0.9, tilt: 0, visible: false, dragging: false};
+      })
+      .filter(Boolean);
+
+    const CAMERA = 4.2;
+
+    function draw(item) {
+      const {model} = item;
+      const cy = Math.cos(item.yaw);
+      const sy = Math.sin(item.yaw);
+      const pitch = model.pitch + item.tilt;
+      const cp = Math.cos(pitch);
+      const sp = Math.sin(pitch);
+      // A banked turn: the aircraft rolls a little about its own length.
+      const roll = model.bank ? 0.28 * Math.sin(item.yaw * 0.5) : 0;
+      const cr = Math.cos(roll);
+      const sr = Math.sin(roll);
+
+      const pts = model.v.map(([x, y0, z0]) => {
+        const y = y0 * cr - z0 * sr;
+        const z = y0 * sr + z0 * cr;
+        const x1 = x * cy - y * sy;
+        const y1 = x * sy + y * cy;
+        const depth = y1 * cp + z * sp;
+        const up = z * cp - y1 * sp;
+        const scale = CAMERA / (CAMERA + depth);
+        return [x1 * scale, -up * scale, depth];
+      });
+
+      const seg = (a, b) => `M${pts[a][0].toFixed(3)} ${pts[a][1].toFixed(3)}L${pts[b][0].toFixed(3)} ${pts[b][1].toFixed(3)}`;
+      let back = '';
+      let front = '';
+      for (const [a, b] of model.e) {
+        if (pts[a][2] + pts[b][2] > 0) back += seg(a, b);
+        else front += seg(a, b);
+      }
+      let strong = '';
+      for (const [a, b] of model.strong) strong += seg(a, b);
+      item.paths[0].setAttribute('d', back);
+      item.paths[1].setAttribute('d', front);
+      item.paths[2].setAttribute('d', strong);
+    }
+
+    for (const item of items) draw(item);
+    if (reduceMotion) return;
+
+    let raf = null;
+    let last = performance.now();
+
+    function tick(now) {
+      raf = null;
+      const dt = Math.min(now - last, 64) / 1000;
+      last = now;
+      let any = false;
+      for (const item of items) {
+        if (!item.visible) continue;
+        any = true;
+        if (!item.dragging) {
+          item.yaw += dt * item.model.spin + velocity * 0.0016;
+          item.tilt = lerp(item.tilt, 0, 0.04);
+        }
+        draw(item);
+      }
+      if (any) raf = requestAnimationFrame(tick);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const item = items.find((i) => i.svg === entry.target);
+        if (item) item.visible = entry.isIntersecting;
+      }
+      if (raf === null && items.some((i) => i.visible)) {
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      }
+    });
+    for (const item of items) observer.observe(item.svg);
+
+    // Drag to turn. Vertical touch movement is left to the page (pan-y), so a
+    // phone can still scroll past with a thumb on the figure.
+    for (const item of items) {
+      if (item.svg.classList.contains('wire--ghost')) continue;
+      let x = 0;
+      let y = 0;
+      item.svg.addEventListener('pointerdown', (event) => {
+        item.dragging = true;
+        x = event.clientX;
+        y = event.clientY;
+        item.svg.setPointerCapture?.(event.pointerId);
+      });
+      item.svg.addEventListener('pointermove', (event) => {
+        if (!item.dragging) return;
+        item.yaw += (event.clientX - x) * 0.008;
+        item.tilt = clamp(item.tilt + (event.clientY - y) * 0.005, -0.7, 0.9);
+        x = event.clientX;
+        y = event.clientY;
+      });
+      const release = () => {
+        item.dragging = false;
+      };
+      item.svg.addEventListener('pointerup', release);
+      item.svg.addEventListener('pointercancel', release);
+    }
+  })();
+
+  /** Figures lean toward the pointer, a few degrees in perspective. */
+  (() => {
+    if (reduceMotion || !finePointer) return;
+    const targets = document.querySelectorAll('.plate__fig > svg, .hobby__fig > svg');
+    for (const el of targets) {
+      el.classList.add('tilt');
+      const host = el.closest('.plate, .hobby') || el;
+      host.addEventListener(
+        'pointermove',
+        (event) => {
+          const r = el.getBoundingClientRect();
+          const dx = clamp((event.clientX - (r.left + r.width / 2)) / r.width, -1.2, 1.2);
+          const dy = clamp((event.clientY - (r.top + r.height / 2)) / r.height, -1.2, 1.2);
+          el.style.setProperty('--ry', `${(dx * 9).toFixed(2)}deg`);
+          el.style.setProperty('--rx', `${(-dy * 9).toFixed(2)}deg`);
+        },
+        {passive: true},
+      );
+      host.addEventListener('pointerleave', () => {
+        el.style.setProperty('--ry', '0deg');
+        el.style.setProperty('--rx', '0deg');
+      });
+    }
+  })();
+
   // ==================================================== chrome and rail state
 
   const sections = [...document.querySelectorAll('main section[id], main footer[id]')].filter(

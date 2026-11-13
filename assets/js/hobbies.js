@@ -7,6 +7,7 @@
  *     that drift against each other, and a full-screen viewer
  *  3. teentaal — the sixteen-beat cycle drawn as a wheel, playable
  *  4. the rally — a shuttle that crosses the court as the section scrolls
+ *  5. the approach — an aircraft that turns onto final on a radar plot
  */
 
 (() => {
@@ -579,6 +580,38 @@
       if (r.bottom < -60 || r.top > vh + 60) return;
       // Starts as the court comes in at the bottom, ends as it nears the top.
       place(clamp((vh * 0.92 - r.top) / (vh * 0.8), 0, 1));
+    });
+  })();
+
+  // ================================================================== flight
+
+  (() => {
+    const plot = document.querySelector('[data-flight]');
+    const path = plot?.querySelector('[data-flight-path]');
+    const plane = plot?.querySelector('[data-flight-plane]');
+    if (!plot || !path || !plane) return;
+
+    const length = path.getTotalLength();
+    const place = (p) => {
+      const at = path.getPointAtLength(length * p);
+      // The heading is the path's own tangent, sampled a little either side.
+      const a = path.getPointAtLength(Math.max(0, length * p - 2));
+      const b = path.getPointAtLength(Math.min(length, length * p + 2));
+      const heading = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+      plane.setAttribute('transform', `translate(${at.x.toFixed(1)} ${at.y.toFixed(1)}) rotate(${heading.toFixed(1)})`);
+      plot.style.setProperty('--flown', (1 - p).toFixed(4));
+    };
+
+    if (reduceMotion) {
+      place(1);
+      return;
+    }
+
+    place(0);
+    PF.onFrame((y, vh) => {
+      const r = plot.getBoundingClientRect();
+      if (r.bottom < -60 || r.top > vh + 60) return;
+      place(clamp((vh * 0.95 - r.top) / (vh * 0.85), 0, 1));
     });
   })();
 })();

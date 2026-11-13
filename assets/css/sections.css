@@ -455,6 +455,12 @@ html.iris-pending::before {
   }
 }
 
+/* A drop cap that is a whole word ("A builder…") needs the word space the
+   script letter's long exit stroke otherwise swallows. */
+.opener__lede .drop--word {
+  margin-right: 0.14em;
+}
+
 /* --------------------------------------------------------------- statement */
 
 /* The one paragraph that says who this is. Each word starts as a ghost and
@@ -470,13 +476,86 @@ html.iris-pending::before {
   padding-block: clamp(56px, 8vw, 128px) clamp(8px, 2vw, 32px);
 }
 
-.statement .w {
+[data-scrub] .w {
   opacity: 0.14;
   transition: opacity 0.45s var(--ease);
 }
 
-.statement .w.is-lit {
+[data-scrub] .w.is-lit {
   opacity: 1;
+}
+
+/* ------------------------------------------------------------------- about */
+
+/* The profile as a three-line ledger: a small numbered key in the margin, the
+   sentence set large beside it, a hairline between each. The serif carries the
+   sentence; the grotesque picks out the two phrases that matter. */
+.about {
+  padding-block: clamp(40px, 6vw, 96px) clamp(64px, 8vw, 128px);
+}
+
+.about__row {
+  display: grid;
+  gap: 14px 32px;
+  padding-block: clamp(26px, 3.4vw, 52px);
+  border-top: 1px solid var(--line);
+}
+
+.about__row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .about__row {
+    grid-template-columns: minmax(150px, 230px) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.about__k {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-top: 0.5em;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.about__k span {
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.about__v {
+  max-width: 23em;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(25px, 3.3vw, 54px);
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  text-wrap: pretty;
+}
+
+.about__v b {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.84em;
+  letter-spacing: -0.035em;
+}
+
+.about__v a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 96%;
+  background-size: 100% 1px;
+  transition: background-size 0.4s var(--ease);
+}
+
+.about__v a:hover {
+  background-size: 0% 1px;
+  background-position: 100% 96%;
 }
 
 .statement .script {
@@ -1641,6 +1720,126 @@ button.frame:focus-visible .frame__img img {
   stroke: none;
 }
 
+/* ------------------------------------------------------------------ flight */
+
+.flight {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--text);
+}
+
+.flight * {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.flight .dim {
+  opacity: 0.3;
+}
+
+.flight .dash {
+  stroke-dasharray: 3 4;
+}
+
+.flight__path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: var(--flown, 0);
+}
+
+.flight__sweep {
+  opacity: 0.45;
+  transform-box: view-box;
+  transform-origin: 240px 180px;
+  animation: fig-spin 9s linear infinite;
+}
+
+/* -------------------------------------------------------------- wireframes */
+
+/* Real three-dimensional objects, drawn in the page's own hand: the script
+   rotates a handful of points, projects them with perspective, and writes the
+   edges out as three hairline paths — far side, near side, and the edges that
+   matter. No canvas, no library. */
+.wire {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--text);
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.wire:active {
+  cursor: grabbing;
+}
+
+.wire path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.wire__back {
+  opacity: 0.2;
+}
+
+.wire__front {
+  opacity: 0.62;
+}
+
+.wire--ghost {
+  pointer-events: none;
+}
+
+.wire-stage {
+  max-width: 920px;
+  margin: clamp(40px, 6vw, 96px) auto 0;
+}
+
+.wire-stage figcaption {
+  text-align: center;
+}
+
+/* The icosahedron behind the contact title. Its twelve corners are the corners
+   of three golden rectangles — the same rectangle the hero opens from. */
+.footer__solid {
+  position: absolute;
+  right: -4%;
+  top: clamp(-90px, -5vw, -30px);
+  width: min(46vw, 520px);
+  /* Background, at the strength of the construction lines around it. */
+  opacity: 0.3;
+}
+
+.footer__lead,
+.cta,
+.footer__meta,
+.footer__base {
+  position: relative;
+}
+
+@media (max-width: 899px) {
+  .footer__solid {
+    width: 70vw;
+    right: -18%;
+    opacity: 0.26;
+  }
+}
+
+/* -------------------------------------------------------------------- tilt */
+
+/* Figures lean toward the pointer, a few degrees in perspective. */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.5s var(--ease-mask);
+  will-change: transform;
+}
+
 /* ----------------------------------------------------------- reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1668,8 +1867,12 @@ button.frame:focus-visible .frame__img img {
     opacity: 0.4;
   }
 
-  .statement .w {
+  [data-scrub] .w {
     opacity: 1;
+  }
+
+  .flight__sweep {
+    animation: none;
   }
 
   .frame__img,

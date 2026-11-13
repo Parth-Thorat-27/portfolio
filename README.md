@@ -68,7 +68,7 @@ series turn into filter buttons above it.
 | | | |
 | --- | --- | --- |
 | — | Hero | the name in a golden rectangle, which opens into the profile |
-| I | Profile | a scroll-read statement, current status, six measured outcomes |
+| I | Profile | three scroll-read sentences: who, what, and what else |
 | II | Projects | the résumé’s SAP Invoice Exception Manager, then one plate per public GitHub repository — each with its own drawn figure |
 | III | Experience | the MDIAS internship |
 | IV | Skills | Python & SQL at the centre of an orbit; the seven stack groups beside it |
@@ -83,9 +83,10 @@ series turn into filter buttons above it.
 | --- | --- | --- |
 | — | Viewfinder | corner brackets, a focus point that follows the pointer, a readout that stops down |
 | I | Photography | assignments, then the contact sheet and its full-screen viewer |
-| II | Tabla | teentaal as a sixteen-beat wheel that can be played |
-| III | Badminton | a court to scale, with a rally that plays out as it scrolls |
-| IV | Contact | the same footer, pointing back at the work page |
+| II | Plane spotting | a radar plot on which an aircraft turns onto final as it scrolls |
+| III | Tabla | teentaal as a sixteen-beat wheel that can be played |
+| IV | Badminton | a court to scale, with a rally that plays out as it scrolls |
+| V | Contact | the same footer, pointing back at the work page |
 
 ## The projects section
 
@@ -187,6 +188,9 @@ a dark band while crossing a boundary.
 | Viewfinder | The off-the-clock title racks into focus on arrival and falls out of it as it scrolls away, while the readout stops down from f/1.8 to f/16. |
 | Contact sheet | Frames unmask upward as they enter; the columns drift against each other; the viewer opens through a circular wipe and pages with arrow keys or a swipe. |
 | Teentaal | The theka is synthesised with the Web Audio API — a falling sine for the bayan, a ringing partial stack and a noise tick for the dayan — and scheduled against the audio clock. Silent until asked. |
+| Wireframes | Real 3D, no canvas and no library: points are rotated, projected with perspective and written out as three hairline SVG paths — far side, near side, key edges. An icosahedron built from three golden rectangles turns behind the contact title; an airliner on the plane-spotting section banks as it turns and can be dragged round. |
+| Tilt | Project and hobby figures lean a few degrees toward the pointer, in perspective. |
+| Approach | An aircraft turns onto final on a radar plot, drawn by scroll position. |
 | Rally | The shuttle follows a path across the court, drawn by scroll position. |
 
 Everything scroll-driven runs from one `requestAnimationFrame` loop that stops when the page

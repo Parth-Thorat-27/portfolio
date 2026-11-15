@@ -25,7 +25,7 @@ the page is complete without it.
 
 ## After changing a stylesheet or script
 
-The pages link their CSS and JS with a version on the end (`sections.css?v=4`). GitHub
+The pages link their CSS and JS with a version on the end (`sections.css?v=5`). GitHub
 Pages lets browsers keep those files for ten minutes and browsers often keep them far
 longer, so a visitor can get the new HTML with the old stylesheet — the page then shows new
 sections with no styling at all. Bump the number in both HTML files whenever a CSS or JS
@@ -106,11 +106,10 @@ series turn into filter buttons above it.
 
 Every plate is written into [index.html](index.html), from the repositories' own READMEs,
 so the page reads in full with no network. [work.js](assets/js/work.js) then asks the GitHub
-API once per session for the account's public repositories and does two things with the
-answer: refreshes each plate's "Updated" month, and lists under the plates any repository
-the markup has not heard of yet — so a new project shows up the day it is pushed, and gets
-a plate of its own when there is time to write one. The two repositories that *are* this
-site are left out. If the request fails, nothing changes.
+API once per session for the account's public repositories and refreshes each plate's
+"Updated" month from the answer. Nothing else is taken from it: a repository only appears
+on the page once it has a plate written for it, so other repositories on the account — a
+site built for someone else, say — never show up here. If the request fails, nothing changes.
 
 To give a new repository a plate, copy an `<article class="plate">`, set `data-repo` to the
 repository name, and draw a figure: a 400 × 400 SVG of hairlines, no fills. The classes

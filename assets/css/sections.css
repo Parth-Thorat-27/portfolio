@@ -825,50 +825,6 @@ html.iris-pending::before {
   }
 }
 
-/* ----------------------------------------------------------- more on github */
-
-.repos {
-  margin-top: clamp(40px, 5vw, 72px);
-}
-
-.repos[hidden] {
-  display: none;
-}
-
-.repo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 4px 24px;
-  align-items: baseline;
-  padding-block: 18px;
-  border-top: 1px solid var(--line);
-}
-
-.repo:last-child {
-  border-bottom: 1px solid var(--line);
-}
-
-.repo__name {
-  font-size: var(--fs-md);
-  letter-spacing: -0.02em;
-}
-
-.repo__desc {
-  grid-column: 1;
-  font-size: var(--fs-prose);
-  line-height: var(--lh-prose);
-  color: var(--dim);
-}
-
-.repo__meta {
-  grid-row: 1;
-  grid-column: 2;
-  font-size: var(--fs-label);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
 /* ----------------------------------------------------------------- marquee */
 
 .marquee {

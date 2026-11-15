@@ -22,9 +22,9 @@
     <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/HWCigars-Regular.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/ImperialScript-Latin.woff2" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/css/fonts.css?v=4" />
-    <link rel="stylesheet" href="assets/css/portfolio.css?v=4" />
-    <link rel="stylesheet" href="assets/css/sections.css?v=4" />
+    <link rel="stylesheet" href="assets/css/fonts.css?v=5" />
+    <link rel="stylesheet" href="assets/css/portfolio.css?v=5" />
+    <link rel="stylesheet" href="assets/css/sections.css?v=5" />
     <!-- Before first paint: the page arrives covered, and the iris opens it. -->
     <script>
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('iris-pending');
@@ -252,8 +252,7 @@
 
             <!-- The résumé's lead project, then one plate per public repository. The copy is written here so the
                  page reads without a network; work.js then asks the GitHub API
-                 for anything pushed since and lists repositories this markup
-                 has not heard of yet. -->
+                 only to refresh each plate's "Updated" month. -->
             <div class="plates" data-plates>
               <article class="plate">
                 <div class="plate__inner">
@@ -573,14 +572,6 @@
                   </div>
                 </div>
               </article>
-            </div>
-
-            <div class="repos" data-repos hidden>
-              <div class="slab__head is-in">
-                <h3>Also on GitHub</h3>
-                <span class="slab__count" data-repos-count></span>
-              </div>
-              <div data-repos-list></div>
             </div>
           </div>
         </div>
@@ -1141,7 +1132,7 @@
       </div>
     </dialog>
 
-    <script src="assets/js/portfolio.js?v=4" defer></script>
-    <script src="assets/js/work.js?v=4" defer></script>
+    <script src="assets/js/portfolio.js?v=5" defer></script>
+    <script src="assets/js/work.js?v=5" defer></script>
   </body>
 </html>

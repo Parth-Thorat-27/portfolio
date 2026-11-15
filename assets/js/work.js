@@ -3,8 +3,8 @@
  *
  *  1. project plates — sticky, stacking, each sinking back as the next covers it
  *  2. the skills orbit — labels riding three rings around Python & SQL
- *  3. GitHub — refreshes each plate's "updated" date from the API and lists any
- *     public repository the page's markup has not heard of yet
+ *  3. GitHub — refreshes each plate's "updated" date from the API. Only the
+ *     projects written into the page are shown; other repositories are ignored.
  */
 
 (() => {
@@ -147,8 +147,6 @@
 
   (() => {
     const USER = 'Parth-Thorat-27';
-    // The site's own repositories are not projects on it.
-    const IGNORE = new Set(['portfolio', `${USER}.github.io`.toLowerCase()]);
     const CACHE = 'pf:repos';
     const MAX_AGE = 60 * 60 * 1000;
 
@@ -161,52 +159,14 @@
     const month = new Intl.DateTimeFormat('en-GB', {month: 'short', year: 'numeric'});
 
     function apply(repos) {
-      const extra = [];
       for (const repo of repos) {
-        const key = repo.name.toLowerCase();
-        const plate = plates.get(key);
-        if (plate) {
-          const stamp = plate.querySelector('[data-repo-pushed]');
-          const when = new Date(repo.pushed);
-          if (stamp && !Number.isNaN(when.getTime())) stamp.textContent = `Updated ${month.format(when)}`;
-        } else if (!IGNORE.has(key) && !repo.archived) {
-          extra.push(repo);
-        }
+        const plate = plates.get(repo.name.toLowerCase());
+        // A repository with no plate is not one of the projects on this page.
+        if (!plate) continue;
+        const stamp = plate.querySelector('[data-repo-pushed]');
+        const when = new Date(repo.pushed);
+        if (stamp && !Number.isNaN(when.getTime())) stamp.textContent = `Updated ${month.format(when)}`;
       }
-
-      const section = document.querySelector('[data-repos]');
-      const list = document.querySelector('[data-repos-list]');
-      if (!section || !list || !extra.length) return;
-
-      list.textContent = '';
-      for (const repo of extra) {
-        const row = document.createElement('a');
-        row.className = 'repo';
-        row.href = repo.url;
-        row.target = '_blank';
-        row.rel = 'noopener';
-
-        const name = document.createElement('span');
-        name.className = 'repo__name';
-        name.textContent = repo.name.replace(/[-_]+/g, ' ');
-
-        const meta = document.createElement('span');
-        meta.className = 'repo__meta';
-        meta.textContent = [repo.language, repo.fork ? 'Fork' : ''].filter(Boolean).join(' · ');
-
-        row.append(name, meta);
-        if (repo.description) {
-          const desc = document.createElement('span');
-          desc.className = 'repo__desc';
-          desc.textContent = repo.description;
-          row.appendChild(desc);
-        }
-        list.appendChild(row);
-      }
-
-      const count = document.querySelector('[data-repos-count]');
-      if (count) count.textContent = String(extra.length).padStart(2, '0');
-      section.hidden = false;
     }
 
     function cached() {
@@ -232,15 +192,7 @@
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error(response.status))))
       .then((data) => {
         if (!Array.isArray(data)) return;
-        const repos = data.map((r) => ({
-          name: r.name,
-          url: r.html_url,
-          description: r.description,
-          language: r.language,
-          fork: r.fork,
-          archived: r.archived,
-          pushed: r.pushed_at,
-        }));
+        const repos = data.map((r) => ({name: r.name, pushed: r.pushed_at}));
         try {
           sessionStorage.setItem(CACHE, JSON.stringify({at: Date.now(), repos}));
         } catch {
